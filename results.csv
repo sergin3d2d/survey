@@ -200,3 +200,23 @@ timestamp,user_id,questionnaire,condition,key,value
 2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q3,50
 2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q4,50
 2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q5,50
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,age,29-39
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,ar_vr_experience,Yes
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,dominant_hand,Right-handed
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,gender,Male
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,health_issues,No
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,ipd,55
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,motor_impairments,No
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,normal_vision,Yes
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,participant_id,P01
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,questionnaire_type,pre_experiment
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,vision_correction,Not Applicable
+2025-06-30T16:57:46.700317,user_20250630165518,pre_experiment,Pre-Experiment,vision_test_score,43
+2025-06-30T16:58:22.719029,user_20250630165518,nasa_tlx,AR-VST,q0,50
+2025-06-30T16:58:22.719029,user_20250630165518,nasa_tlx,AR-VST,q1,50
+2025-06-30T16:58:22.719029,user_20250630165518,nasa_tlx,AR-VST,q2,50
+2025-06-30T16:58:22.719029,user_20250630165518,nasa_tlx,AR-VST,q3,50
+2025-06-30T16:58:22.719029,user_20250630165518,nasa_tlx,AR-VST,q4,50
+2025-06-30T16:58:22.719029,user_20250630165518,nasa_tlx,AR-VST,q5,50
