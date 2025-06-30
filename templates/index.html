@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NASA-TLX</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        select, input[type="number"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+        .question {
+            margin-bottom: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        .scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .scale span {
+            flex: 0 0 60px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+        }
+        input[type="range"] {
+            flex-grow: 1;
+            margin: 0 15px;
+            cursor: pointer;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NASA-TLX Questionnaire</h1>
+        <form action="/submit" method="post">
+            <input type="hidden" name="step" value="{{ step }}">
+            {% if step == '1' %}
+            <div class="form-group">
+                <label for="experiment">Experiment:</label>
+                <select name="experiment" id="experiment">
+                    {% for experiment in experiments %}
+                    <option value="{{ experiment }}">{{ experiment }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="user_id">User ID:</label>
+                <input type="number" id="user_id" name="user_id" min="1" max="200" value="1">
+            </div>
+            <div class="form-group">
+                <label for="condition">Condition:</label>
+                <select name="condition" id="condition">
+                    {% for condition in conditions %}
+                    <option value="{{ condition }}">{{ condition }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {% for i in range(texts|length) %}
+            <div class="question">
+                <label>{{ texts[i] }}</label>
+                <div class="scale">
+                    <span>{{ left_labels[i] }}</span>
+                    <input type="range" name="q{{ i }}" min="0" max="100" value="50" step="5">
+                    <span>{{ right_labels[i] }}</span>
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit">Next</button>
+            {% elif step == '2' %}
+            <h2>Pairwise Comparisons</h2>
+            <p>Please select the more important factor in each pair.</p>
+            {% for i in range(pairs|length) %}
+            <div class="question">
+                <label>{{ texts[pairs[i][0]] }} vs {{ texts[pairs[i][1]] }}</label>
+                <div class="scale">
+                    <input type="radio" name="pair_{{ i }}" value="{{ pairs[i][0] }}" required> {{ texts[pairs[i][0]].split(' - ')[0] }}
+                    <input type="radio" name="pair_{{ i }}" value="{{ pairs[i][1] }}"> {{ texts[pairs[i][1]].split(' - ')[0] }}
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit">Submit</button>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
