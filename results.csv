@@ -1,0 +1,202 @@
+timestamp,user_id,questionnaire,condition,key,value
+2025-06-30T14:49:51.817396,user_20250630144936,consent,Consent,consent_name,Sergei
+2025-06-30T14:49:51.817396,user_20250630144936,consent,Consent,consent_check,on
+2025-06-30T14:50:02.244222,user_20250630144936,demographics,Demographics,age,36
+2025-06-30T14:50:02.244222,user_20250630144936,demographics,Demographics,gender,Male
+2025-06-30T14:50:14.467634,user_20250630144936,vision_test,Vision Test,vision_score,16
+2025-06-30T14:50:22.492662,user_20250630144936,nasa_tlx,On-Screen,q0,55
+2025-06-30T14:50:22.492662,user_20250630144936,nasa_tlx,On-Screen,q1,50
+2025-06-30T14:50:22.492662,user_20250630144936,nasa_tlx,On-Screen,q2,50
+2025-06-30T14:50:22.492662,user_20250630144936,nasa_tlx,On-Screen,q3,50
+2025-06-30T14:50:22.492662,user_20250630144936,nasa_tlx,On-Screen,q4,50
+2025-06-30T14:50:22.492662,user_20250630144936,nasa_tlx,On-Screen,q5,50
+2025-06-30T14:50:42.363367,user_20250630144936,nasa_tlx_weighted_score,On-Screen,weighted_score,51.0
+2025-06-30T14:50:46.352724,user_20250630144936,pcueq,PCUE-Q for On-Screen,condition,PCUE-Q for On-Screen
+2025-06-30T14:50:46.352724,user_20250630144936,pcueq,PCUE-Q for On-Screen,q1,4
+2025-06-30T14:50:46.352724,user_20250630144936,pcueq,PCUE-Q for On-Screen,q2,4
+2025-06-30T14:58:10.256532,user_20250630145802,pre_experiment,Pre-Experiment,Age,43
+2025-06-30T14:58:10.256532,user_20250630145802,pre_experiment,Pre-Experiment,Gender,234
+2025-06-30T14:58:21.950825,user_20250630145802,nasa_tlx,AR-VST,q0,70
+2025-06-30T14:58:21.950825,user_20250630145802,nasa_tlx,AR-VST,q1,30
+2025-06-30T14:58:21.950825,user_20250630145802,nasa_tlx,AR-VST,q2,65
+2025-06-30T14:58:21.950825,user_20250630145802,nasa_tlx,AR-VST,q3,35
+2025-06-30T14:58:21.950825,user_20250630145802,nasa_tlx,AR-VST,q4,65
+2025-06-30T14:58:21.950825,user_20250630145802,nasa_tlx,AR-VST,q5,30
+2025-06-30T14:58:37.918710,user_20250630145802,nasa_tlx_weighted_score,AR-VST,weighted_score,52.666666666666664
+2025-06-30T14:58:41.955778,user_20250630145802,pcueq,PCUE-Q for AR-VST,condition,PCUE-Q for AR-VST
+2025-06-30T14:58:41.955778,user_20250630145802,pcueq,PCUE-Q for AR-VST,q1,5
+2025-06-30T14:58:41.955778,user_20250630145802,pcueq,PCUE-Q for AR-VST,q2,3
+2025-06-30T14:58:45.083283,user_20250630145802,nasa_tlx,AR-OST,q0,50
+2025-06-30T14:58:45.083283,user_20250630145802,nasa_tlx,AR-OST,q1,50
+2025-06-30T14:58:45.083283,user_20250630145802,nasa_tlx,AR-OST,q2,50
+2025-06-30T14:58:45.083283,user_20250630145802,nasa_tlx,AR-OST,q3,50
+2025-06-30T14:58:45.083283,user_20250630145802,nasa_tlx,AR-OST,q4,50
+2025-06-30T14:58:45.083283,user_20250630145802,nasa_tlx,AR-OST,q5,50
+2025-06-30T14:59:06.893255,user_20250630145802,nasa_tlx_weighted_score,AR-OST,weighted_score,50.0
+2025-06-30T14:59:09.750606,user_20250630145802,pcueq,PCUE-Q for AR-OST,condition,PCUE-Q for AR-OST
+2025-06-30T14:59:09.750606,user_20250630145802,pcueq,PCUE-Q for AR-OST,q1,6
+2025-06-30T14:59:09.750606,user_20250630145802,pcueq,PCUE-Q for AR-OST,q2,3
+2025-06-30T14:59:15.603532,user_20250630145802,nasa_tlx,On-Screen,q0,60
+2025-06-30T14:59:15.603532,user_20250630145802,nasa_tlx,On-Screen,q1,30
+2025-06-30T14:59:15.603532,user_20250630145802,nasa_tlx,On-Screen,q2,65
+2025-06-30T14:59:15.603532,user_20250630145802,nasa_tlx,On-Screen,q3,40
+2025-06-30T14:59:15.603532,user_20250630145802,nasa_tlx,On-Screen,q4,65
+2025-06-30T14:59:15.603532,user_20250630145802,nasa_tlx,On-Screen,q5,40
+2025-06-30T14:59:23.791443,user_20250630145802,nasa_tlx_weighted_score,On-Screen,weighted_score,50.666666666666664
+2025-06-30T14:59:27.343029,user_20250630145802,pcueq,PCUE-Q for On-Screen,condition,PCUE-Q for On-Screen
+2025-06-30T14:59:27.343029,user_20250630145802,pcueq,PCUE-Q for On-Screen,q1,5
+2025-06-30T14:59:27.343029,user_20250630145802,pcueq,PCUE-Q for On-Screen,q2,3
+2025-06-30T14:59:29.906108,user_20250630145802,final_preference,Final Preference,preference,On-Screen
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,participant_id,P01
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,vision_test_score,43
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,ipd,55
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,age,51-60
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,gender,Male
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,motor_impairments,No
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,health_issues,No
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,normal_vision,No
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,vision_correction,Yes
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,dominant_hand,Right-handed
+2025-06-30T15:29:46.163037,user_20250630152818,pre_experiment,Pre-Experiment,ar_vr_experience,Yes
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,participant_id,45
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,vision_test_score,345
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,ipd,343
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,age,18-28
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,gender,Male
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,motor_impairments,Yes
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,health_issues,Yes
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,normal_vision,Yes
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,vision_correction,Yes
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,dominant_hand,Right-handed
+2025-06-30T15:30:24.527695,user_20250630152818,pre_experiment,Pre-Experiment,ar_vr_experience,Yes
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,participant_id,32
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,vision_test_score,34
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,ipd,23
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,age,18-28
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,gender,Prefer not to say
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,motor_impairments,No
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,health_issues,Yes
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,normal_vision,No
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,vision_correction,No
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,dominant_hand,Ambidextrous
+2025-06-30T15:31:37.567899,user_20250630152818,pre_experiment,Pre-Experiment,ar_vr_experience,No
+2025-06-30T15:32:52.624374,user_20250630152818,nasa_tlx,On-Screen,q0,50
+2025-06-30T15:32:52.624374,user_20250630152818,nasa_tlx,On-Screen,q1,50
+2025-06-30T15:32:52.624374,user_20250630152818,nasa_tlx,On-Screen,q2,50
+2025-06-30T15:32:52.624374,user_20250630152818,nasa_tlx,On-Screen,q3,50
+2025-06-30T15:32:52.624374,user_20250630152818,nasa_tlx,On-Screen,q4,50
+2025-06-30T15:32:52.624374,user_20250630152818,nasa_tlx,On-Screen,q5,50
+2025-06-30T15:33:02.928180,user_20250630152818,nasa_tlx_weighted_score,On-Screen,weighted_score,50.0
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,participant_id,23
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,vision_test_score,234
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,ipd,234
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,age,18-28
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,gender,Male
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,motor_impairments,Yes
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,health_issues,Yes
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,normal_vision,Yes
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,vision_correction,Yes
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,dominant_hand,Right-handed
+2025-06-30T15:41:23.349207,user_20250630152818,pre_experiment,Pre-Experiment,ar_vr_experience,Yes
+2025-06-30T15:41:46.630770,user_20250630152818,nasa_tlx,On-Screen,q0,50
+2025-06-30T15:41:46.630770,user_20250630152818,nasa_tlx,On-Screen,q1,50
+2025-06-30T15:41:46.630770,user_20250630152818,nasa_tlx,On-Screen,q2,50
+2025-06-30T15:41:46.630770,user_20250630152818,nasa_tlx,On-Screen,q3,50
+2025-06-30T15:41:46.630770,user_20250630152818,nasa_tlx,On-Screen,q4,50
+2025-06-30T15:41:46.630770,user_20250630152818,nasa_tlx,On-Screen,q5,50
+2025-06-30T15:42:01.235874,user_20250630152818,nasa_tlx_weighted_score,On-Screen,weighted_score,50.0
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,participant_id,P01
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,vision_test_score,43
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,ipd,55
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,age,18-28
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,gender,Male
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,motor_impairments,Yes
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,health_issues,Yes
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,normal_vision,Yes
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,vision_correction,No
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,dominant_hand,Right-handed
+2025-06-30T15:51:17.910377,user_20250630155030,pre_experiment,Pre-Experiment,ar_vr_experience,No
+2025-06-30T15:51:58.091968,user_20250630155030,nasa_tlx,On-Screen,q0,50
+2025-06-30T15:51:58.091968,user_20250630155030,nasa_tlx,On-Screen,q1,50
+2025-06-30T15:51:58.091968,user_20250630155030,nasa_tlx,On-Screen,q2,50
+2025-06-30T15:51:58.091968,user_20250630155030,nasa_tlx,On-Screen,q3,50
+2025-06-30T15:51:58.091968,user_20250630155030,nasa_tlx,On-Screen,q4,50
+2025-06-30T15:51:58.091968,user_20250630155030,nasa_tlx,On-Screen,q5,50
+2025-06-30T15:52:08.433430,user_20250630155030,nasa_tlx_weighted_score,On-Screen,weighted_score,50.0
+2025-06-30T15:52:21.560230,user_20250630155030,nasa_tlx_weighted_score,NASA-TLX Weighting for On-Screen,weighted_score,0.0
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,age,29-39
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,ar_vr_experience,Yes
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,dominant_hand,Left-handed
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,gender,Female
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,health_issues,No
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,ipd,55
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,motor_impairments,No
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,normal_vision,Yes
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,participant_id,P01
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,questionnaire_type,pre_experiment
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,vision_correction,Not Applicable
+2025-06-30T16:09:21.967312,user_20250630160836,pre_experiment,Pre-Experiment,vision_test_score,43
+2025-06-30T16:09:23.884396,user_20250630160836,nasa_tlx,AR-VST,q0,50
+2025-06-30T16:09:23.884396,user_20250630160836,nasa_tlx,AR-VST,q1,50
+2025-06-30T16:09:23.884396,user_20250630160836,nasa_tlx,AR-VST,q2,50
+2025-06-30T16:09:23.884396,user_20250630160836,nasa_tlx,AR-VST,q3,50
+2025-06-30T16:09:23.884396,user_20250630160836,nasa_tlx,AR-VST,q4,50
+2025-06-30T16:09:23.884396,user_20250630160836,nasa_tlx,AR-VST,q5,50
+2025-06-30T16:09:32.352079,user_20250630160836,nasa_tlx_weighted_score,AR-VST,weighted_score,50.0
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,age,40-50
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,ar_vr_experience,No
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,consent,Yes
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,dominant_hand,Left-handed
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,gender,Female
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,gender_other_specify,
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,health_issues,No
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,ipd,55
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,motor_impairments,No
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,normal_vision,Yes
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,participant_id,P01
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,questionnaire_type,pre_experiment
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,vision_correction,Not Applicable
+2025-06-30T16:13:15.067685,user_20250630161242,pre_experiment,Pre-Experiment,vision_test_score,345
+2025-06-30T16:13:17.225462,user_20250630161242,nasa_tlx,On-Screen,q0,50
+2025-06-30T16:13:17.225462,user_20250630161242,nasa_tlx,On-Screen,q1,50
+2025-06-30T16:13:17.225462,user_20250630161242,nasa_tlx,On-Screen,q2,50
+2025-06-30T16:13:17.225462,user_20250630161242,nasa_tlx,On-Screen,q3,50
+2025-06-30T16:13:17.225462,user_20250630161242,nasa_tlx,On-Screen,q4,50
+2025-06-30T16:13:17.225462,user_20250630161242,nasa_tlx,On-Screen,q5,50
+2025-06-30T16:13:26.453233,user_20250630161242,nasa_tlx_weighted_score,On-Screen,weighted_score,50.0
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,condition,PCUE-Q for On-Screen
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,A1,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,A2,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,A3,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,A4,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,A5,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,B1,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,B2,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,B3,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,B4,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,B5,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,B6,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,C1,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,C2,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,C3,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,C4,3
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,D1,2
+2025-06-30T16:13:41.973373,user_20250630161242,pcueq,PCUE-Q for On-Screen,D2,3
+2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q0,50
+2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q1,50
+2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q2,50
+2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q3,50
+2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q4,50
+2025-06-30T16:13:45.725612,user_20250630161242,nasa_tlx,AR-OST,q5,50

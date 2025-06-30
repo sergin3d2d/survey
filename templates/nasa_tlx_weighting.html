@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>NASA-TLX</title>
+    <title>NASA-TLX Weighting</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -21,7 +21,7 @@
             width: 100%;
             max-width: 800px;
         }
-        h1 {
+        h1, h2 {
             text-align: center;
             color: #444;
             margin-bottom: 30px;
@@ -30,53 +30,10 @@
             display: flex;
             flex-direction: column;
         }
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        select, input[type="number"] {
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 200px;
-        }
         .question {
             margin-bottom: 25px;
             border-top: 1px solid #eee;
             padding-top: 25px;
-        }
-        .scale {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .scale span {
-            flex: 0 0 60px;
-            text-align: center;
-            font-size: 0.9em;
-            color: #555;
-        }
-        input[type="range"] {
-            flex-grow: 1;
-            margin: 0 15px;
-            cursor: pointer;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
         }
         .pairwise-options {
             display: flex;
@@ -114,17 +71,19 @@
             color: #666;
             text-align: center;
         }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
             margin-top: 20px;
+            transition: background-color 0.3s;
         }
-        .back-button {
-            background-color: #6c757d;
-        }
-        .settings-link {
-            text-align: right;
-            margin-bottom: 20px;
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
     <script>
@@ -141,40 +100,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="settings-link">
-            <a href="/settings">Settings</a>
-        </div>
-        <h1>NASA-TLX Questionnaire</h1>
-        <form action="/submit" method="post">
-            <input type="hidden" name="step" value="{{ step }}">
-            {% if step == '1' %}
-            <div class="form-group">
-                <label for="user_id">User ID:</label>
-                <input type="number" id="user_id" name="user_id" min="1" max="200" value="1">
-            </div>
-            <div class="form-group">
-                <label for="condition">Condition:</label>
-                <select name="condition" id="condition">
-                    {% for condition in conditions %}
-                    <option value="{{ condition }}">{{ condition }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            {% for i in range(texts|length) %}
-            <div class="question">
-                <label>{{ texts[i] }}</label>
-                <div class="scale">
-                    <span>{{ left_labels[i] }}</span>
-                    <input type="range" name="q{{ i }}" min="0" max="100" value="50" step="5">
-                    <span>{{ right_labels[i] }}</span>
-                </div>
-            </div>
-            {% endfor %}
-            <button type="submit">Next</button>
-            {% elif step == '2' %}
-            <h2>NASA-TLX Mental Workload Rankings</h2>
-            <p>For each of the pairs listed below, select the scale title that represents the more important contributor to workload in the display.</p>
+        <h2>NASA-TLX Mental Workload Rankings for {{ condition }}</h2>
+        <p>For each of the pairs listed below, select the scale title that represents the more important contributor to workload in the display.</p>
+        <form action="/nasa_tlx_weighting" method="post">
             {% for i in range(pairs|length) %}
             <div class="question">
                 <div class="pairwise-options">
@@ -190,12 +118,42 @@
                 </div>
             </div>
             {% endfor %}
-            <div class="button-group">
-                <button type="button" class="back-button" onclick="window.location.href='/'">Back</button>
-                <button type="submit">Submit</button>
-            </div>
-            {% endif %}
-        </form>
-    </div>
+            <div class="navigation-buttons">
+            <a href="/back" class="btn btn-secondary">Back</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<style>
+    .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+    .btn {
+        border: none;
+        padding: 15px 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.1em;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
 </body>
 </html>

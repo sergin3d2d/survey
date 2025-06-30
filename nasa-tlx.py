@@ -2,6 +2,19 @@
 
 ## install: pip3 install appjar
 from appJar import gui
+import json
+import os
+
+CONFIG_FILE = 'config.json'
+
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, 'r') as f:
+            return json.load(f)
+    return {'conditions': ['Condition 1', 'Condition 2'], 'weighted': True}
+
+config = load_config()
+conditions = config.get('conditions', ["Condition 1", "Condition 2"])
 
 ## Texts for the individual questionnaire items
 texts = ["Mental Demand    -    How mentally demanding was the task?",
@@ -15,21 +28,12 @@ texts = ["Mental Demand    -    How mentally demanding was the task?",
 left_labels = ["Very Low", "Very Low", "Very Low", "Perfect", "Very Low", "Very Low"]
 right_labels = ["Very High", "Very High", "Very High", "Failure", "Very High", "Very High"]
 
-## Labels of the Conditions to be chosen from
-conditions = ["Condition 1", "Condition 2"]
-
-## Experiments to be chosen from
-experiments = ["Experiment 1", "Experiment 2"]
-
-
 ## Called when the submit button is clicked
 def on_submit():
-    experiment = app.getOptionBox("Experiment")
     user_id = app.getSpinBox("User ID")
     condition = app.getOptionBox("Condition")
 
     write_string = ''
-    write_string += str(experiment) + ','
     write_string += str(user_id) + ','
     write_string += str(condition)
 
@@ -49,7 +53,6 @@ app.setTitle("NASA-TLX")
 app.setSize(1000, 700)
 app.setFont(10)
 
-app.addLabelOptionBox("Experiment", experiments, 0, 0)
 app.addLabelSpinBoxRange("User ID", 1, 200, 0, 1)
 app.addLabelOptionBox("Condition", conditions, 0, 2)
 app.addHorizontalSeparator(2, 0, 3)

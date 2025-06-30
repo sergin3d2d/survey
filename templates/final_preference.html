@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Final Preference</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Final Preference</h1>
+        <form action="/questionnaire" method="post">
+            <input type="hidden" name="questionnaire_type" value="final_preference">
+            <p>Please indicate your final preference.</p>
+            <div class="form-group">
+                <label for="preference">Which condition did you prefer?</label>
+                <select class="form-control" id="preference" name="preference">
+                    <option>On-Screen</option>
+                    <option>AR-OST</option>
+                    <option>AR-VST</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

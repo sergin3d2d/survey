@@ -1,0 +1,15 @@
+{
+    "pre_experiment_questions": [
+        "Age",
+        "Gender"
+    ],
+    "main_conditions": [
+        "On-Screen",
+        "AR-OST",
+        "AR-VST"
+    ],
+    "end_conditions": [
+        "Final Preference"
+    ],
+    "weighted": false
+}

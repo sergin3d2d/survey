@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eligibility Check</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .info-section, .criteria-section, .condition-section {
+            margin-bottom: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        .info-item, .criteria-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .criteria-item span:last-child {
+            font-weight: bold;
+        }
+        .pass {
+            color: #28a745;
+        }
+        .fail {
+            color: #dc3545;
+        }
+        .condition-list {
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Eligibility & Experiment Overview</h1>
+
+        <div class="info-section">
+            <h2>Participant Details</h2>
+            <div class="info-item">
+                <span>Participant ID:</span>
+                <span>{{ session.participant_id }}</span>
+            </div>
+            <div class="info-item">
+                <span>Vision Test Score:</span>
+                <span>{{ session.vision_test_score }}</span>
+            </div>
+            <div class="info-item">
+                <span>Interpupillary Distance (IPD):</span>
+                <span>{{ session.ipd }} mm</span>
+            </div>
+        </div>
+
+        <div class="criteria-section">
+            <h2>Eligibility Criteria</h2>
+            <div class="criteria-item">
+                <span>Agreed to Consent Form:</span>
+                <span class="{{ 'pass' if eligibility.consent else 'fail' }}">{{ 'Yes' if eligibility.consent else 'No' }}</span>
+            </div>
+            <div class="criteria-item">
+                <span>No Motor Impairments:</span>
+                <span class="{{ 'pass' if eligibility.no_motor_impairments else 'fail' }}">{{ 'Yes' if eligibility.no_motor_impairments else 'No' }}</span>
+            </div>
+            <div class="criteria-item">
+                <span>No Disqualifying Health Issues:</span>
+                <span class="{{ 'pass' if eligibility.no_health_issues else 'fail' }}">{{ 'Yes' if eligibility.no_health_issues else 'No' }}</span>
+            </div>
+        </div>
+
+        {% if is_eligible %}
+            <div class="condition-section">
+                <h2>Condition Order</h2>
+                <ol class="condition-list">
+                    {% for condition in session.main_conditions_randomized %}
+                        <li>{{ condition }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+            <div class="navigation-buttons">
+                <form action="/start_experiment_proper" method="post">
+                    <button type="submit" class="btn btn-primary">Start Experiment</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="fail">
+                <h2>Participant is Not Eligible</h2>
+                <p>The participant does not meet the eligibility criteria for this study. Please thank them for their time. Do not proceed with the experiment.</p>
+            </div>
+             <div class="navigation-buttons">
+                <a href="/" class="btn btn-secondary">Return to Start</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pre-Experiment Questionnaire</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        p.text-muted {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+        .form-group:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-check-group {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+        .form-check {
+            margin-bottom: 10px;
+        }
+        .form-check-label {
+            font-weight: normal;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pre-Experiment Participant Questionnaire</h1>
+        <p class="text-muted">"Thank you for your interest in our study. Before we begin, please answer the following questions. Your responses will be kept confidential and will help us confirm your eligibility and understand your background for our analysis."</p>
+        
+        <form action="/check_eligibility" method="post">
+            <input type="hidden" name="questionnaire_type" value="pre_experiment">
+            
+            <div class="form-group">
+                <label for="participant_id">Participant ID:</label>
+                <input type="text" id="participant_id" name="participant_id" required>
+            </div>
+            <div class="form-group">
+                <label for="vision_test_score">Vision Test Score:</label>
+                <input type="text" id="vision_test_score" name="vision_test_score" required>
+            </div>
+            <div class="form-group">
+                <label for="ipd">Interpupillary Distance (IPD):</label>
+                <input type="text" id="ipd" name="ipd" placeholder="mm" required>
+            </div>
+
+            <div class="form-group">
+                <label>1. Have you read the Participant Information and Consent Form and do you voluntarily agree to participate in this study?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="consent" id="consent_yes" value="Yes" required>
+                        <label class="form-check-label" for="consent_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="consent" id="consent_no" value="No">
+                        <label class="form-check-label" for="consent_no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>2. What is your age?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="age" id="age_18_28" value="18-28" required>
+                        <label class="form-check-label" for="age_18_28">18-28</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="age" id="age_29_39" value="29-39">
+                        <label class="form-check-label" for="age_29_39">29-39</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="age" id="age_40_50" value="40-50">
+                        <label class="form-check-label" for="age_40_50">40-50</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="age" id="age_51_60" value="51-60">
+                        <label class="form-check-label" for="age_51_60">51-60</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>3. What is your gender?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender_male" value="Male" required>
+                        <label class="form-check-label" for="gender_male">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender_female" value="Female">
+                        <label class="form-check-label" for="gender_female">Female</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender_not_say" value="Prefer not to say">
+                        <label class="form-check-label" for="gender_not_say">Prefer not to say</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender_non_binary" value="Non-binary">
+                        <label class="form-check-label" for="gender_non_binary">Non-binary</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="gender_other" value="Other">
+                        <label class="form-check-label" for="gender_other">Other</label>
+                    </div>
+                </div>
+                 <input type="text" class="form-control mt-1" name="gender_other_specify" placeholder="Please specify if 'Other'">
+            </div>
+
+            <div class="form-group">
+                <label>4. Do you have any motor impairments that would affect your ability to perform precise tasks with your hands?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="motor_impairments" id="motor_yes" value="Yes" required>
+                        <label class="form-check-label" for="motor_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="motor_impairments" id="motor_no" value="No">
+                        <label class="form-check-label" for="motor_no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>5. Do you have any health issues, like epilepsy or severe headaches, that could make using augmented reality glasses unsafe for you?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="health_issues" id="health_yes" value="Yes" required>
+                        <label class="form-check-label" for="health_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="health_issues" id="health_no" value="No">
+                        <label class="form-check-label" for="health_no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>6. Can you see normally without glasses or contact lenses?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="normal_vision" id="vision_yes" value="Yes" required>
+                        <label class="form-check-label" for="vision_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="normal_vision" id="vision_no" value="No">
+                        <label class="form-check-label" for="vision_no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>7. If you responded 'NO' to the previous question, are you capable of using your glasses or contact lenses throughout the experiment?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vision_correction" id="correction_yes" value="Yes" required>
+                        <label class="form-check-label" for="correction_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vision_correction" id="correction_no" value="No">
+                        <label class="form-check-label" for="correction_no">No</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vision_correction" id="correction_na" value="Not Applicable">
+                        <label class="form-check-label" for="correction_na">Not Applicable</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>8. What is your dominant hand?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="dominant_hand" id="hand_right" value="Right-handed" required>
+                        <label class="form-check-label" for="hand_right">Right-handed</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="dominant_hand" id="hand_left" value="Left-handed">
+                        <label class="form-check-label" for="hand_left">Left-handed</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="dominant_hand" id="hand_ambi" value="Ambidextrous">
+                        <label class="form-check-label" for="hand_ambi">Ambidextrous</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>9. Have you used Augmented Reality (AR) or Virtual Reality (VR) glasses before?</label>
+                <div class="form-check-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ar_vr_experience" id="exp_yes" value="Yes" required>
+                        <label class="form-check-label" for="exp_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ar_vr_experience" id="exp_no" value="No">
+                        <label class="form-check-label" for="exp_no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button type="submit" class="btn btn-primary">Check Eligibility</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
