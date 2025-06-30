@@ -78,7 +78,62 @@
         button:hover {
             background-color: #0056b3;
         }
+        .pairwise-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .pairwise-options .radio-label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: 2px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            width: 200px;
+        }
+        .pairwise-options .radio-label:hover {
+            background-color: #f0f8ff;
+        }
+        .pairwise-options input[type="radio"] {
+            display: none;
+        }
+        .pairwise-options input[type="radio"]:checked + span {
+            font-weight: bold;
+        }
+        .pairwise-options .radio-label.selected {
+            background-color: #007bff;
+            color: white;
+        }
+        .pairwise-or {
+            font-style: italic;
+            color: #666;
+            text-align: center;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .back-button {
+            background-color: #6c757d;
+        }
     </style>
+    <script>
+        function selectLabel(label) {
+            const radio = label.querySelector('input[type="radio"]');
+            radio.checked = true;
+            const groupName = radio.name;
+            document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            label.classList.add('selected');
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -119,18 +174,27 @@
             {% endfor %}
             <button type="submit">Next</button>
             {% elif step == '2' %}
-            <h2>Pairwise Comparisons</h2>
-            <p>Please select the more important factor in each pair.</p>
+            <h2>NASA-TLX Mental Workload Rankings</h2>
+            <p>For each of the pairs listed below, select the scale title that represents the more important contributor to workload in the display.</p>
             {% for i in range(pairs|length) %}
             <div class="question">
-                <label>{{ texts[pairs[i][0]] }} vs {{ texts[pairs[i][1]] }}</label>
-                <div class="scale">
-                    <input type="radio" name="pair_{{ i }}" value="{{ pairs[i][0] }}" required> {{ texts[pairs[i][0]].split(' - ')[0] }}
-                    <input type="radio" name="pair_{{ i }}" value="{{ pairs[i][1] }}"> {{ texts[pairs[i][1]].split(' - ')[0] }}
+                <div class="pairwise-options">
+                    <label class="radio-label" onclick="selectLabel(this)">
+                        <input type="radio" name="pair_{{ i }}" value="{{ pairs[i][0] }}" required>
+                        <span>{{ texts[pairs[i][0]].split(' - ')[0] }}</span>
+                    </label>
+                    <span class="pairwise-or">or</span>
+                    <label class="radio-label" onclick="selectLabel(this)">
+                        <input type="radio" name="pair_{{ i }}" value="{{ pairs[i][1] }}">
+                        <span>{{ texts[pairs[i][1]].split(' - ')[0] }}</span>
+                    </label>
                 </div>
             </div>
             {% endfor %}
-            <button type="submit">Submit</button>
+            <div class="button-group">
+                <button type="button" class="back-button" onclick="window.location.href='/'">Back</button>
+                <button type="submit">Submit</button>
+            </div>
             {% endif %}
         </form>
     </div>

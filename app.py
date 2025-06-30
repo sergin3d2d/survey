@@ -4,6 +4,13 @@ import itertools
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
 ## Texts for the individual questionnaire items
 texts = ["Mental Demand - How mentally demanding was the task?",
          "Physical Demand - How physically demanding was the task?",
