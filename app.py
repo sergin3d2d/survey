@@ -59,36 +59,41 @@ pairs = list(itertools.combinations(range(len(texts)), 2))
 @app.route('/')
 def index():
     session.clear()
-    config = load_config()
-    session['user_id'] = f'user_{datetime.now().strftime("%Y%m%d%H%M%S")}'
-    return render_template('pre_experiment.html', conditions=config['main_conditions'])
+    return render_template('initial_conditions.html')
 
-@app.route('/check_eligibility', methods=['POST'])
-def check_eligibility():
-    config = load_config()
-    responses = request.form.to_dict()
+@app.route('/pre_experiment_questionnaire', methods=['POST'])
+def pre_experiment_questionnaire():
+    # Save initial conditions to session
+    session['participant_id'] = request.form.get('participant_id')
+    session['vision_test_score'] = request.form.get('vision_test_score')
+    session['ipd'] = request.form.get('ipd')
     
-    session['participant_id'] = responses.get('participant_id')
-    session['vision_test_score'] = responses.get('vision_test_score')
-    session['ipd'] = responses.get('ipd')
-    
-    # Store all pre-experiment responses for saving
-    session['pre_experiment_responses'] = responses
-
-    eligibility = {
-        'consent': responses.get('consent') == 'Yes',
-        'no_motor_impairments': responses.get('motor_impairments') == 'No',
-        'no_health_issues': responses.get('health_issues') == 'No'
+    # Also, store them in a dictionary for easy saving later
+    session['initial_conditions_responses'] = {
+        'participant_id': request.form.get('participant_id'),
+        'vision_test_score': request.form.get('vision_test_score'),
+        'ipd': request.form.get('ipd')
     }
     
-    is_eligible = all(eligibility.values())
+    config = load_config()
+    return render_template('pre_experiment.html', conditions=config['main_conditions'])
 
-    if is_eligible:
-        main_conditions = config['main_conditions']
-        random.shuffle(main_conditions)
-        session['main_conditions_randomized'] = main_conditions
+@app.route('/initialize_experiment', methods=['POST'])
+def initialize_experiment():
+    config = load_config()
     
-    return render_template('eligibility_check.html', eligibility=eligibility, is_eligible=is_eligible)
+    # Combine initial conditions and pre-experiment responses
+    responses = request.form.to_dict()
+    if 'initial_conditions_responses' in session:
+        responses.update(session.pop('initial_conditions_responses'))
+
+    session['pre_experiment_responses'] = responses
+
+    main_conditions = config['main_conditions']
+    random.shuffle(main_conditions)
+    session['main_conditions_randomized'] = main_conditions
+    
+    return render_template('initialization_summary.html', conditions=main_conditions)
 
 @app.route('/start_experiment_proper', methods=['POST'])
 def start_experiment_proper():
@@ -188,20 +193,12 @@ def back():
     if 'current_step' in session and session['current_step'] > 0:
         session['current_step'] -= 1
         return redirect(url_for('questionnaire'))
-    # If at the beginning of the questionnaire, go back to eligibility check
+    # If at the beginning of the questionnaire, go back to the initial page
     if 'main_conditions_randomized' in session:
-        return redirect(url_for('check_eligibility_page')) # A new route to re-render the check page
+        return redirect(url_for('index')) 
     return redirect(url_for('index'))
 
-@app.route('/check_eligibility_page')
-def check_eligibility_page():
-    # This route helps the back button work from the first questionnaire
-    eligibility = {
-        'consent': session.get('pre_experiment_responses', {}).get('consent') == 'Yes',
-        'no_motor_impairments': session.get('pre_experiment_responses', {}).get('motor_impairments') == 'No',
-        'no_health_issues': session.get('pre_experiment_responses', {}).get('health_issues') == 'No'
-    }
-    return render_template('eligibility_check.html', eligibility=eligibility)
+
 
 
 @app.route('/settings', methods=['GET', 'POST'])

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Initial Conditions</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Initial Conditions</h1>
+        <form action="/pre_experiment_questionnaire" method="post">
+            <div class="form-group">
+                <label for="participant_id">Participant ID:</label>
+                <input type="text" id="participant_id" name="participant_id" required>
+            </div>
+            <div class="form-group">
+                <label for="vision_test_score">Vision Test Score:</label>
+                <input type="text" id="vision_test_score" name="vision_test_score" required>
+            </div>
+            <div class="form-group">
+                <label for="ipd">Interpupillary Distance (IPD):</label>
+                <input type="text" id="ipd" name="ipd" placeholder="mm" required>
+            </div>
+            <div class="navigation-buttons">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
