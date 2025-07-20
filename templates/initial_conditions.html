@@ -45,6 +45,19 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
+        .radio-group {
+            display: flex;
+            align-items: center;
+        }
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: inline-block;
+            margin-bottom: 0;
+            margin-right: 20px;
+        }
         .navigation-buttons {
             display: flex;
             justify-content: flex-end;
@@ -72,7 +85,7 @@
 <body>
     <div class="container">
         <h1>Initial Conditions</h1>
-        <form action="/pre_experiment_questionnaire" method="post">
+        <form action="/initialize_experiment" method="post">
             <div class="form-group">
                 <label for="participant_id">Participant ID:</label>
                 <input type="text" id="participant_id" name="participant_id" required>
@@ -84,6 +97,24 @@
             <div class="form-group">
                 <label for="ipd">Interpupillary Distance (IPD):</label>
                 <input type="text" id="ipd" name="ipd" placeholder="mm" required>
+            </div>
+            <div class="form-group">
+                <label>Dominant Hand:</label>
+                <div class="radio-group">
+                    <input type="radio" id="dominant_hand_left" name="dominant_hand" value="left" required>
+                    <label for="dominant_hand_left">Left</label>
+                    <input type="radio" id="dominant_hand_right" name="dominant_hand" value="right">
+                    <label for="dominant_hand_right">Right</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Previous AR Experience:</label>
+                <div class="radio-group">
+                    <input type="radio" id="previous_ar_experience_yes" name="previous_ar_experience" value="yes" required>
+                    <label for="previous_ar_experience_yes">Yes</label>
+                    <input type="radio" id="previous_ar_experience_no" name="previous_ar_experience" value="no">
+                    <label for="previous_ar_experience_no">No</label>
+                </div>
             </div>
             <div class="navigation-buttons">
                 <button type="submit" class="btn btn-primary">Next</button>

@@ -70,6 +70,10 @@
 <body>
     <div class="container">
         <h1>Experiment Initialized</h1>
+        <div class="summary-details">
+            <p><strong>IPD:</strong> {{ ipd }} mm</p>
+            <p><strong>Dominant Hand:</strong> {{ dominant_hand.capitalize() }}</p>
+        </div>
         <p>The randomized order of conditions is as follows:</p>
         <ul class="condition-list">
             {% for condition in conditions %}

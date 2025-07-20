@@ -61,39 +61,35 @@ def index():
     session.clear()
     return render_template('initial_conditions.html')
 
-@app.route('/pre_experiment_questionnaire', methods=['POST'])
-def pre_experiment_questionnaire():
+
+@app.route('/initialize_experiment', methods=['POST'])
+def initialize_experiment():
     # Save initial conditions to session
     session['participant_id'] = request.form.get('participant_id')
     session['vision_test_score'] = request.form.get('vision_test_score')
     session['ipd'] = request.form.get('ipd')
+    session['dominant_hand'] = request.form.get('dominant_hand')
+    session['previous_ar_experience'] = request.form.get('previous_ar_experience')
     
     # Also, store them in a dictionary for easy saving later
     session['initial_conditions_responses'] = {
         'participant_id': request.form.get('participant_id'),
         'vision_test_score': request.form.get('vision_test_score'),
-        'ipd': request.form.get('ipd')
+        'ipd': request.form.get('ipd'),
+        'dominant_hand': request.form.get('dominant_hand'),
+        'previous_ar_experience': request.form.get('previous_ar_experience')
     }
     
     config = load_config()
-    return render_template('pre_experiment.html', conditions=config['main_conditions'])
-
-@app.route('/initialize_experiment', methods=['POST'])
-def initialize_experiment():
-    config = load_config()
-    
-    # Combine initial conditions and pre-experiment responses
-    responses = request.form.to_dict()
-    if 'initial_conditions_responses' in session:
-        responses.update(session.pop('initial_conditions_responses'))
-
-    session['pre_experiment_responses'] = responses
-
     main_conditions = config['main_conditions']
     random.shuffle(main_conditions)
     session['main_conditions_randomized'] = main_conditions
     
-    return render_template('initialization_summary.html', conditions=main_conditions)
+    return render_template('initialization_summary.html', 
+                           conditions=main_conditions, 
+                           ipd=session['ipd'], 
+                           dominant_hand=session['dominant_hand'])
+
 
 @app.route('/start_experiment_proper', methods=['POST'])
 def start_experiment_proper():
