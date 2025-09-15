@@ -17,12 +17,12 @@ config = load_config()
 conditions = config.get('conditions', ["Condition 1", "Condition 2"])
 
 ## Texts for the individual questionnaire items
-texts = ["Mental Demand    -    How mentally demanding was the task?",
-         "Physical Demand    -    How physically demanding was the task?",
-         "Temporal Demand    -    How hurried or rushed was the pace of the task?",
-         "Performance    -    How successful were you in accomplishing what you were asked to do?",
-         "Effort    -    How hard did you have to work to accomplish your level of performance?",
-         "Frustration    -    How insecure, discouraged, irritated, stressed and annoyed were you?"]
+texts = ["Mental Demand - How mentally demanding was the task?",
+         "Physical Demand - How physically demanding was the task?",
+         "Temporal Demand - How hurried or rushed was the pace of the task?",
+         "Performance - How successful were you in accomplishing what you were asked to do?",
+         "Effort - How hard did you have to work to accomplish your level of performance?",
+         "Frustration - How insecure, discouraged, irritated, stressed and annoyed were you?"]
 
 ## Labels on the left and right sides of the scale
 left_labels = ["Very Low", "Very Low", "Very Low", "Perfect", "Very Low", "Very Low"]

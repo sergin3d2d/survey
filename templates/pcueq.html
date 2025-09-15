@@ -37,13 +37,15 @@
         }
         .sus-scale-container {
             flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
         }
         .category-section {
             margin-bottom: 40px;
         }
         .sus-scale-labels-container {
             display: flex;
-            justify-content: flex-end;
+            /* Removed justify-content: flex-end; */
         }
         .sus-scale-labels {
             display: flex;
@@ -52,7 +54,7 @@
             font-weight: 600;
             color: #4b5563;
             margin-bottom: 0.5rem;
-            width: 400px; /* Should match sus-scale-container flex-basis */
+            width: 100%; /* Adjusted to 100% */
             padding: 0 5px;
         }
         .sus-scale {
@@ -68,8 +70,8 @@
             cursor: pointer;
             transition: background-color 0.2s;
             background-color: #f3f4f6;
-            padding: 1rem 0.5rem;
-            font-size: 1.25rem;
+            padding: 0.8rem 0.4rem;
+            font-size: 1.1rem;
             font-weight: 500;
             color: #1f2937;
             position: relative;
@@ -130,7 +132,7 @@
 <body class="bg-gray-100">
 
     <div class="sus-container bg-white shadow-lg rounded-lg p-8">
-        <h1 class="sus-header">Post-Condition User Experience Questionnaire (PCUE-Q) for {{ condition }}</h1>
+        <h1 class="sus-header">Post-Condition User Experience<br>for {{ condition }}</h1>
 
         <form action="/questionnaire" method="post">
             <input type="hidden" name="questionnaire_type" value="pcueq">
@@ -167,18 +169,20 @@
             {% for category, cat_questions in questions.items() %}
                 <div class="category-section">
                     <h2 class="text-2xl font-bold mb-4">{{ category }}</h2>
-                    <div class="sus-scale-labels-container">
-                        <div class="sus-scale-labels">
-                            <span>Strongly Disagree</span>
-                            <span>Strongly Agree</span>
-                        </div>
-                    </div>
                     {% for id, text, reverse_scored in cat_questions %}
                     <div class="sus-question">
                         <div class="sus-question-text">
-                            <p>{{ text[3:] }} {% if reverse_scored %}<span class="text-sm text-gray-500">(Reverse Scored)</span>{% endif %}</p>
+                            <p>{{ text }} {% if reverse_scored %}<span class="text-sm text-gray-500">(Reverse Scored)</span>{% endif %}</p>
                         </div>
                         <div class="sus-scale-container">
+                            {% if loop.first %}
+                            <div class="sus-scale-labels-container">
+                                <div class="sus-scale-labels">
+                                    <span>Strongly Disagree</span>
+                                    <span>Strongly Agree</span>
+                                </div>
+                            </div>
+                            {% endif %}
                             <div class="sus-scale" id="scale-{{ id }}">
                                 {% for i in range(1, 6) %}
                                 <label class="sus-option">
