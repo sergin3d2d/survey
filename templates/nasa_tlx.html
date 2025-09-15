@@ -47,9 +47,21 @@
             font-size: 0.9em;
             color: #555;
         }
-        input[type="range"] {
+        .slider-container {
+            position: relative;
             flex-grow: 1;
             margin: 0 15px;
+        }
+        .slider-container output {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9em;
+            color: #555;
+        }
+        input[type="range"] {
+            width: 100%;
             cursor: pointer;
         }
         button {
@@ -71,6 +83,7 @@
 <body>
     <div class="container">
         <h1>NASA-TLX: {{ condition }}</h1>
+        <p>Please rate your experience for the condition you just completed. Move each slider to the point that best reflects your experience. There are no right or wrong answers. You will complete these ratings for each condition (three in total).</p>
         <form action="/questionnaire" method="post">
             <input type="hidden" name="questionnaire_type" value="nasa_tlx">
             {% for i in range(texts|length) %}
@@ -78,7 +91,10 @@
                 <label>{{ texts[i] }}</label>
                 <div class="scale">
                     <span>{{ left_labels[i] }}</span>
-                    <input type="range" name="q{{ i }}" min="0" max="100" value="50" step="5">
+                    <div class="slider-container">
+                        <input type="range" name="q{{ i }}" min="0" max="100" value="50" step="1" oninput="this.nextElementSibling.value = this.value + ' out of 100'">
+                        <output>50 out of 100</output>
+                    </div>
                     <span>{{ right_labels[i] }}</span>
                 </div>
             </div>

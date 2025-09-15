@@ -46,14 +46,14 @@ def add_header(response):
     response.headers['Expires'] = '0'
     return response
 
-texts = ["Mental Demand - How mentally demanding was the task?",
-         "Physical Demand - How physically demanding was the task?",
-         "Temporal Demand - How hurried or rushed was the pace of the task?",
-         "Performance - How successful were you in accomplishing what you were asked to do?",
-         "Effort - How hard did you have to work to accomplish your level of performance?",
-         "Frustration - How insecure, discouraged, irritated, stressed and annoyed were you?"]
-left_labels = ["Very Low", "Very Low", "Very Low", "Perfect", "Very Low", "Very Low"]
-right_labels = ["Very High", "Very High", "Very High", "Failure", "Very High", "Very High"]
+texts = ["Mental Demand — How much thinking, deciding, or remembering was required.",
+         "Physical Demand — How much physical activity or movement was required.",
+         "Temporal Demand — How hurried or rushed you felt.",
+         "Performance — How well you felt you did overall.",
+         "Effort — How hard you had to work (mentally or physically) to reach your performance.",
+         "Frustration — How insecure, discouraged, irritated, or stressed you felt."]
+left_labels = ["Very Low", "Very Low", "Very Low", "Excellent", "Very Low", "Very Low"]
+right_labels = ["Very High", "Very High", "Very High", "Poor", "Very High", "Very High"]
 pairs = list(itertools.combinations(range(len(texts)), 2))
 
 @app.route('/')
