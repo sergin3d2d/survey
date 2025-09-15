@@ -1,80 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PCUE-Q</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCUE-Q for {{ condition }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+        }
+        .sus-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+        }
+        .sus-header {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #1f2937;
+        }
+        .sus-question {
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .sus-question-text {
+            flex: 1 1 300px;
+            margin-right: 20px;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        .sus-scale-container {
+            flex: 1 1 400px;
+        }
+        .category-section {
+            margin-bottom: 40px;
+        }
+        .sus-scale-labels-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .sus-scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+            width: 400px; /* Should match sus-scale-container flex-basis */
+            padding: 0 5px;
+        }
+        .sus-scale {
+            display: flex;
+            border: 2px solid #6b7280;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .sus-option {
+            flex: 1;
+            text-align: center;
+            border-right: 2px solid #6b7280;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background-color: #f3f4f6;
+            padding: 1rem 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #1f2937;
+            position: relative;
+        }
+        .sus-option:last-child {
+            border-right: none;
+        }
+        .sus-option input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
             margin: 0;
         }
-        .container {
-            background: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 800px;
+        .sus-option:hover {
+            background-color: #e5e7eb;
         }
-        h1, h2, h3 {
-            text-align: center;
-            color: #444;
-            margin-bottom: 20px;
+        .sus-option input[type="radio"]:checked + span {
+             color: white;
         }
-        h3 {
-            margin-top: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        .question {
-            margin-bottom: 25px;
-            border-top: 1px solid #eee;
-            padding-top: 25px;
-        }
-        .likert-scale {
-            display: flex;
-            justify-content: center;
-            align-items: stretch; /* Changed from center to stretch */
-            gap: 10px;
-            padding: 0;
-            list-style-type: none;
-            margin-top: 15px;
-        }
-        .likert-scale .radio-label {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            border: 2px solid #007bff;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-            width: 120px;
-            text-align: center;
-        }
-        .likert-scale .radio-label:hover {
-            background-color: #f0f8ff;
-        }
-        .likert-scale input[type="radio"] {
-            display: none;
-        }
-        .likert-scale input[type="radio"]:checked + span {
-            font-weight: bold;
-        }
-        .likert-scale .radio-label.selected {
-            background-color: #007bff;
-            color: white;
+        .sus-option-checked {
+            background-color: #3b82f6 !important;
         }
         .navigation-buttons {
             display: flex;
@@ -105,85 +125,73 @@
         .btn-secondary:hover {
             background-color: #5a6268;
         }
-        small.text-muted {
-            font-size: 0.8em;
-            color: #999;
-        }
     </style>
-    <script>
-        function selectLabel(label) {
-            const radio = label.querySelector('input[type="radio"]');
-            radio.checked = true;
-            const groupName = radio.name;
-            document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
-                r.parentElement.classList.remove('selected');
-            });
-            label.classList.add('selected');
-        }
-    </script>
 </head>
-<body>
-    <div class="container">
-        <h1>Post-Condition User Experience Questionnaire (PCUE-Q)</h1>
-        <h2>for {{ condition }}</h2>
-        <hr>
+<body class="bg-gray-100">
+
+    <div class="sus-container bg-white shadow-lg rounded-lg p-8">
+        <h1 class="sus-header">Post-Condition User Experience Questionnaire (PCUE-Q) for {{ condition }}</h1>
+
         <form action="/questionnaire" method="post">
             <input type="hidden" name="questionnaire_type" value="pcueq">
             <input type="hidden" name="condition" value="{{ condition }}">
 
-            {% macro likert_question(id, text, reverse_scored=false) %}
-            <div class="question">
-                <label>{{ text }}</label>
-                {% if reverse_scored %}<small class="text-muted d-block text-center mb-2">Reverse Scored</small>{% endif %}
-                <ul class="likert-scale">
-                    <label class="radio-label" onclick="selectLabel(this)">
-                        <input type="radio" name="{{ id }}" value="1" required>
-                        <span>Strongly Disagree</span>
-                    </label>
-                    <label class="radio-label" onclick="selectLabel(this)">
-                        <input type="radio" name="{{ id }}" value="2">
-                        <span>Disagree</span>
-                    </label>
-                    <label class="radio-label" onclick="selectLabel(this)">
-                        <input type="radio" name="{{ id }}" value="3">
-                        <span>Neutral</span>
-                    </label>
-                    <label class="radio-label" onclick="selectLabel(this)">
-                        <input type="radio" name="{{ id }}" value="4">
-                        <span>Agree</span>
-                    </label>
-                    <label class="radio-label" onclick="selectLabel(this)">
-                        <input type="radio" name="{{ id }}" value="5">
-                        <span>Strongly Agree</span>
-                    </label>
-                </ul>
-            </div>
-            {% endmacro %}
+            {% set questions = {
+                "Usability & Helpfulness": [
+                    ("A1", "I found the guidance system was easy to use.", false),
+                    ("A2", "The information provided by the guidance system was easy to understand.", false),
+                    ("A3", "I felt confident in completing the tasks using this system's guidance.", false),
+                    ("A4", "I think I would need a lot of practice to become skillful with this system.", true),
+                    ("A5", "I felt the guidance was helpful for performing the tasks accurately.", false)
+                ],
+                "Visual Quality & Perception": [
+                    ("B1", "The virtual guides (e.g., paths, outlines) appeared clear and sharp.", false),
+                    ("B2", "I was able to comfortably focus on both the virtual guides and the physical task objects at the same time.", false),
+                    ("B3", "I perceived the virtual guides as stable and correctly positioned over the physical world.", false),
+                    ("B4", "The virtual guides made it easy to judge the depth and position of targets.", false),
+                    ("B5", "The virtual content occluding my view of the tool/hand did not significantly disrupt my performance.", false),
+                    ("B6", "The overall visual display (brightness, resolution, field of view) was satisfactory for performing the tasks.", false)
+                ],
+                "Physical & Visual Comfort": [
+                    ("C1", "Using this system for the duration of the tasks caused significant eye strain or fatigue.", true),
+                    ("C2", "I experienced feelings of dizziness, headache, or nausea while using this system.", true),
+                    ("C3", "I did not perceive any distracting blur or double vision.", false),
+                    ("C4", "The headset was physically comfortable to wear during the tasks.", false)
+                ],
+                "Overall Experience & Affect": [
+                    ("D1", "I felt frustrated or annoyed while performing the tasks with this system.", true),
+                    ("D2", "Overall, I was satisfied with this guidance system.", false)
+                ]
+            } %}
 
-            <h3>Usability & Helpfulness</h3>
-            {{ likert_question('A1', 'A1. I found the guidance system was easy to use.') }}
-            {{ likert_question('A2', 'A2. The information provided by the guidance system was easy to understand.') }}
-            {{ likert_question('A3', 'A3. I felt confident in completing the tasks using this system\'s guidance.') }}
-            {{ likert_question('A4', 'A4. I think I would need a lot of practice to become skillful with this system.', reverse_scored=true) }}
-            {{ likert_question('A5', 'A5. I felt the guidance was helpful for performing the tasks accurately.') }}
-
-            <h3>Visual Quality & Perception</h3>
-            {{ likert_question('B1', 'B1. The virtual guides (e.g., paths, outlines) appeared clear and sharp.') }}
-            {{ likert_question('B2', 'B2. I was able to comfortably focus on both the virtual guides and the physical task objects at the same time.') }}
-            {{ likert_question('B3', 'B3. I perceived the virtual guides as stable and correctly positioned over the physical world.') }}
-            {{ likert_question('B4', 'B4. The virtual guides made it easy to judge the depth and position of targets.') }}
-            {{ likert_question('B5', 'B5. The virtual content occluding my view of the tool/hand did not significantly disrupt my performance.') }}
-            {{ likert_question('B6', 'B6. The overall visual display (brightness, resolution, field of view) was satisfactory for performing the tasks.') }}
-
-            <h3>Physical & Visual Comfort</h3>
-            {{ likert_question('C1', 'C1. Using this system for the duration of the tasks caused significant eye strain or fatigue.', reverse_scored=true) }}
-            {{ likert_question('C2', 'C2. I experienced feelings of dizziness, headache, or nausea while using this system.', reverse_scored=true) }}
-            {{ likert_question('C3', 'C3. I did not perceive any distracting blur or double vision.') }}
-            {{ likert_question('C4', 'C4. The headset was physically comfortable to wear during the tasks.') }}
-
-            <h3>Overall Experience & Affect</h3>
-            {{ likert_question('D1', 'D1. I felt frustrated or annoyed while performing the tasks with this system.', reverse_scored=true) }}
-            {{ likert_question('D2', 'D2. Overall, I was satisfied with this guidance system.') }}
+            {% for category, cat_questions in questions.items() %}
+                <div class="category-section">
+                    <h2 class="text-2xl font-bold mb-4">{{ category }}</h2>
+                    <div class="sus-scale-labels-container">
+                        <div class="sus-scale-labels">
+                            <span>Strongly Disagree</span>
+                            <span>Strongly Agree</span>
+                        </div>
+                    </div>
+                    {% for id, text, reverse_scored in cat_questions %}
+                    <div class="sus-question">
+                        <div class="sus-question-text">
+                            <p>{{ text[3:] }} {% if reverse_scored %}<span class="text-sm text-gray-500">(Reverse Scored)</span>{% endif %}</p>
+                        </div>
+                        <div class="sus-scale-container">
+                            <div class="sus-scale" id="scale-{{ id }}">
+                                {% for i in range(1, 6) %}
+                                <label class="sus-option">
+                                    <input type="radio" name="{{ id }}" value="{{ i }}" required>
+                                    <span>{{ i }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
 
             <div class="navigation-buttons">
                 <a href="/back" class="btn btn-secondary">Back</a>
@@ -191,5 +199,21 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.querySelectorAll('.sus-scale').forEach(scale => {
+            const options = scale.querySelectorAll('.sus-option');
+            options.forEach(option => {
+                const radio = option.querySelector('input[type="radio"]');
+                radio.addEventListener('change', () => {
+                    options.forEach(opt => opt.classList.remove('sus-option-checked'));
+                    if (radio.checked) {
+                        option.classList.add('sus-option-checked');
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
