@@ -1,23 +1,87 @@
 <!DOCTYPE html>
-<html style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
+<html
+    style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
 
 <head>
     <title>End of Survey</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <style>
-        html { font-size: calc(var(--global-font) * 10px) !important; }
-        label, .sus-question-text, .question label { font-size: var(--question-font) !important; }
-        p, .text-muted, .description { font-size: var(--desc-font) !important; }
+        html {
+            font-size: calc(var(--global-font) * 10px) !important;
+        }
+
+        label,
+        .sus-question-text,
+        .question label {
+            font-size: var(--question-font) !important;
+        }
+
+        p,
+        .text-muted,
+        .description {
+            font-size: var(--desc-font) !important;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 50px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container mt-5 text-center">
+    <div class="container">
         <h1>Thank You!</h1>
         <p>You have completed the survey.</p>
-        <div class="mt-4">
+        <div>
             <a href="/" class="btn btn-primary">Start Again</a>
+            <a href="/review" class="btn btn-secondary"
+                style="margin-left: 10px; background-color: #6c757d; color: white;">Review Results</a>
         </div>
     </div>
 </body>

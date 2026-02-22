@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
+<html lang="en"
+    style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCUE-Q for {{ condition.split('for ')[1] if 'for ' in condition else condition }}</title>
+    <title>User experience questionnaire for {{ condition.split('for ')[1] if 'for ' in condition else condition }}
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -153,9 +155,21 @@
     </style>
 
     <style>
-        html { font-size: calc(var(--global-font) * 10px) !important; }
-        label, .sus-question-text, .question label { font-size: var(--question-font) !important; }
-        p, .text-muted, .description { font-size: var(--desc-font) !important; }
+        html {
+            font-size: calc(var(--global-font) * 10px) !important;
+        }
+
+        label,
+        .sus-question-text,
+        .question label {
+            font-size: var(--question-font) !important;
+        }
+
+        p,
+        .text-muted,
+        .description {
+            font-size: var(--desc-font) !important;
+        }
     </style>
 </head>
 
@@ -165,8 +179,8 @@
         <div class="text-right text-gray-500 text-sm mb-4">
             Participant ID: <span class="font-bold">{{ participant_id }}</span>
         </div>
-        <h1 class="sus-header">Post-Condition User Experience Questionnaire<br>for {{ condition.split('for ')[1] if 'for
-            ' in condition else condition }}</h1>
+        <h1 class="sus-header">User experience questionnaire<br>for {{ condition.split('for ')[1] if 'for ' in condition
+            else condition }}</h1>
         <p class="text-center text-gray-600 mb-8">Please rate your experience with the guidance system for the condition
             you just completed. For each statement, select the number that best reflects your view (1 = Strongly
             Disagree, 5 = Strongly Agree). Base your answers on this condition only. There are no right or wrong

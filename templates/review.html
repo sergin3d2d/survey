@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
+<html
+    style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
 
 <head>
     <title>Structured Survey Results Review</title>
@@ -61,35 +62,35 @@
 
         .data-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 4px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
         }
 
         .data-item {
             background: #fafafa;
-            padding: 3px 8px;
-            border-radius: 3px;
+            padding: 8px 12px;
+            border-radius: 4px;
             border: 1px solid #f0f0f0;
             display: flex;
-            align-items: baseline;
-            gap: 6px;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .data-label {
-            font-size: 0.65rem;
+            font-size: 0.70rem;
             font-weight: 700;
             text-transform: uppercase;
-            color: #aaa;
-            flex-shrink: 0;
+            color: #888;
+            white-space: normal;
         }
 
         .data-value {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            color: #444;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            color: #333;
+            overflow: visible;
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         .badge-cond {
@@ -102,9 +103,21 @@
     </style>
 
     <style>
-        html { font-size: calc(var(--global-font) * 10px) !important; }
-        label, .sus-question-text, .question label { font-size: var(--question-font) !important; }
-        p, .text-muted, .description { font-size: var(--desc-font) !important; }
+        html {
+            font-size: calc(var(--global-font) * 10px) !important;
+        }
+
+        label,
+        .sus-question-text,
+        .question label {
+            font-size: var(--question-font) !important;
+        }
+
+        p,
+        .text-muted,
+        .description {
+            font-size: var(--desc-font) !important;
+        }
     </style>
 </head>
 
