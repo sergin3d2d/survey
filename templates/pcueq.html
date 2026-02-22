@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
 
 <head>
     <meta charset="UTF-8">
@@ -150,6 +150,12 @@
         .btn-secondary:hover {
             background-color: #5a6268;
         }
+    </style>
+
+    <style>
+        html { font-size: calc(var(--global-font) * 10px) !important; }
+        label, .sus-question-text, .question label { font-size: var(--question-font) !important; }
+        p, .text-muted, .description { font-size: var(--desc-font) !important; }
     </style>
 </head>
 

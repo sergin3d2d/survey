@@ -11,5 +11,8 @@
     "end_conditions": [
         "Final Preference"
     ],
-    "weighted": false
+    "weighted": false,
+    "question_font_size": 1.6,
+    "description_font_size": 1.4,
+    "global_font_size": 1.5
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
 
 <head>
     <title>Structured Survey Results Review</title>
@@ -99,6 +99,12 @@
             border-radius: 8px;
             font-size: 0.7rem;
         }
+    </style>
+
+    <style>
+        html { font-size: calc(var(--global-font) * 10px) !important; }
+        label, .sus-question-text, .question label { font-size: var(--question-font) !important; }
+        p, .text-muted, .description { font-size: var(--desc-font) !important; }
     </style>
 </head>
 

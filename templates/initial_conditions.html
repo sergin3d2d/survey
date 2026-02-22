@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="--global-font: {{ global_font_size|default(1.0) }}; --question-font: {{ question_font_size|default(1.6) }}rem; --desc-font: {{ description_font_size|default(1.4) }}rem;">
 <head>
     <title>Initial Conditions</title>
     <style>
@@ -80,6 +80,12 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+    </style>
+
+    <style>
+        html { font-size: calc(var(--global-font) * 10px) !important; }
+        label, .sus-question-text, .question label { font-size: var(--question-font) !important; }
+        p, .text-muted, .description { font-size: var(--desc-font) !important; }
     </style>
 </head>
 <body>

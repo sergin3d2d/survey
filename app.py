@@ -8,6 +8,9 @@ import random
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True only if using HTTPS
 
 CONFIG_FILE = 'config.json'
 RESULTS_FILE = 'results.csv'
@@ -45,6 +48,15 @@ def add_header(response):
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '0'
     return response
+
+@app.context_processor
+def inject_global_settings():
+    config = load_config()
+    return dict(
+        question_font_size=config.get('question_font_size', 1.6),
+        description_font_size=config.get('description_font_size', 1.4),
+        global_font_size=config.get('global_font_size', 1.0)
+    )
 
 texts = ["Mental Demand — How much thinking, deciding, or remembering was required.",
          "Physical Demand — How much physical activity or movement was required.",
@@ -218,12 +230,18 @@ def settings():
     if request.method == 'POST':
         config['main_conditions'] = [c.strip() for c in request.form['main_conditions'].split('\n') if c.strip()]
         config['weighted'] = 'weighted' in request.form
+        config['question_font_size'] = float(request.form.get('question_font_size', 1.6))
+        config['description_font_size'] = float(request.form.get('description_font_size', 1.4))
+        config['global_font_size'] = float(request.form.get('global_font_size', 1.0))
         save_config(config)
         return redirect(url_for('index'))
         
     return render_template('settings.html', 
-                           main_conditions=config.get('main_conditions', []),
-                           weighted=config.get('weighted', True))
+                            main_conditions=config.get('main_conditions', []),
+                            weighted=config.get('weighted', True),
+                            question_font_size=config.get('question_font_size', 1.6),
+                            description_font_size=config.get('description_font_size', 1.4),
+                            global_font_size=config.get('global_font_size', 1.0))
 
 @app.route('/review')
 def review():
@@ -261,4 +279,6 @@ def review():
     return render_template('review.html', grouped_results=grouped_results, sorted_uids=sorted_uids)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    # Set host to '0.0.0.0' to allow access from other devices on the same network
+
+    app.run(debug=True, port=5001, host='0.0.0.0')
