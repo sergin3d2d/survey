@@ -66,6 +66,7 @@ def index():
 def initialize_experiment():
     # Save initial conditions to session
     session['participant_id'] = request.form.get('participant_id')
+    session['user_id'] = f"user_{datetime.now().strftime('%Y%m%d%H%M%S')}"
     session['vision_test_score'] = request.form.get('vision_test_score')
     session['ipd'] = request.form.get('ipd')
     session['dominant_hand'] = request.form.get('dominant_hand')
@@ -99,9 +100,9 @@ def start_experiment_proper():
     write_result({
         'questionnaire': 'pre_experiment',
         'condition': 'Pre-Experiment',
-        'responses': session.get('pre_experiment_responses', {})
+        'responses': session.get('initial_conditions_responses', {})
     })
-    session.pop('pre_experiment_responses', None) # Clear it after saving
+    session.pop('initial_conditions_responses', None) # Clear it after saving
 
     workflow = []
     for condition in session['main_conditions_randomized']:
@@ -126,6 +127,10 @@ def questionnaire():
         responses = request.form.to_dict()
         questionnaire_type = responses.pop('questionnaire_type', 'unknown')
         
+        if 'responses' not in session:
+            session['responses'] = {}
+        session['responses'][current_task] = responses
+        
         write_result({
             'questionnaire': questionnaire_type,
             'condition': current_task,
@@ -140,11 +145,14 @@ def questionnaire():
         return redirect(url_for('questionnaire'))
 
     if current_task in config['main_conditions']:
-        return render_template('nasa_tlx.html', texts=texts, left_labels=left_labels, right_labels=right_labels, condition=current_task)
+        current_responses = session.get('responses', {}).get(current_task, {})
+        return render_template('nasa_tlx.html', texts=texts, left_labels=left_labels, right_labels=right_labels, condition=current_task, existing_responses=current_responses, participant_id=session.get('participant_id'))
     elif current_task.startswith('PCUE-Q'):
-        return render_template('pcueq.html', condition=current_task)
+        current_responses = session.get('responses', {}).get(current_task, {})
+        return render_template('pcueq.html', condition=current_task, existing_responses=current_responses, participant_id=session.get('participant_id'))
     elif current_task == "Final Preference":
-        return render_template('final_preference.html', conditions=session.get('main_conditions_randomized', []))
+        current_responses = session.get('responses', {}).get(current_task, {})
+        return render_template('final_preference.html', conditions=session.get('main_conditions_randomized', []), existing_responses=current_responses, participant_id=session.get('participant_id'))
     else:
         return f"Unknown task: {current_task}"
 
@@ -167,6 +175,12 @@ def nasa_tlx_weighting():
             winner = int(request.form.get('pair_' + str(i)))
             weights[winner] += 1
         
+        if 'responses' not in session:
+            session['responses'] = {}
+        if current_condition not in session['responses']:
+            session['responses'][current_condition] = {}
+        session['responses'][current_condition]['weights'] = weights
+
         ratings = session.get('nasa_tlx_ratings', {})
         weighted_score = 0
         for i in range(len(texts)):
@@ -182,7 +196,8 @@ def nasa_tlx_weighting():
         session['current_step'] += 1
         return redirect(url_for('questionnaire'))
 
-    return render_template('nasa_tlx_weighting.html', pairs=pairs, texts=texts, condition=current_condition)
+    existing_weights = session.get('responses', {}).get(current_condition, {}).get('weights', [])
+    return render_template('nasa_tlx_weighting.html', pairs=pairs, texts=texts, condition=current_condition, existing_weights=existing_weights, participant_id=session.get('participant_id'))
 
 @app.route('/back')
 def back():
@@ -209,6 +224,41 @@ def settings():
     return render_template('settings.html', 
                            main_conditions=config.get('main_conditions', []),
                            weighted=config.get('weighted', True))
+
+@app.route('/review')
+def review():
+    grouped_results = {}
+    if os.path.exists(RESULTS_FILE):
+        with open(RESULTS_FILE, 'r') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                uid = row.get('user_id', 'N/A')
+                if uid not in grouped_results:
+                    grouped_results[uid] = {
+                        'participant_id': 'N/A',
+                        'timestamp': row['timestamp'],
+                        'sections': {}
+                    }
+                
+                q_type = row['questionnaire']
+                cond = row['condition']
+                
+                if q_type == 'pre_experiment' and row['key'] == 'participant_id':
+                    grouped_results[uid]['participant_id'] = row['value']
+
+                section_key = f"{q_type} | {cond}"
+                if section_key not in grouped_results[uid]['sections']:
+                    grouped_results[uid]['sections'][section_key] = []
+                
+                grouped_results[uid]['sections'][section_key].append({
+                    'key': row['key'],
+                    'value': row['value']
+                })
+
+    # Sort participants by timestamp descending
+    sorted_uids = sorted(grouped_results.keys(), key=lambda x: grouped_results[x]['timestamp'], reverse=True)
+    
+    return render_template('review.html', grouped_results=grouped_results, sorted_uids=sorted_uids)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

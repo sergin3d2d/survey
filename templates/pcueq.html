@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,13 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+
         .sus-container {
             max-width: 900px;
             margin: 40px auto;
             padding: 40px;
         }
+
         .sus-header {
             text-align: center;
             font-size: 2rem;
@@ -22,6 +25,7 @@
             margin-bottom: 40px;
             color: #1f2937;
         }
+
         .sus-question {
             display: flex;
             align-items: center;
@@ -29,24 +33,29 @@
             margin-bottom: 3rem;
             flex-wrap: wrap;
         }
+
         .sus-question-text {
             flex: 1 1 300px;
             margin-right: 20px;
             font-size: 0.9rem;
             color: #374151;
         }
+
         .sus-scale-container {
             flex: 1 1 400px;
             display: flex;
             flex-direction: column;
         }
+
         .category-section {
             margin-bottom: 40px;
         }
+
         .sus-scale-labels-container {
             display: flex;
             /* Removed justify-content: flex-end; */
         }
+
         .sus-scale-labels {
             display: flex;
             justify-content: space-between;
@@ -54,15 +63,18 @@
             font-weight: 600;
             color: #4b5563;
             margin-bottom: 0.5rem;
-            width: 100%; /* Adjusted to 100% */
+            width: 100%;
+            /* Adjusted to 100% */
             padding: 0 5px;
         }
+
         .sus-scale {
             display: flex;
             border: 2px solid #6b7280;
             border-radius: 0.5rem;
             overflow: hidden;
         }
+
         .sus-option {
             flex: 1;
             text-align: center;
@@ -76,9 +88,11 @@
             color: #1f2937;
             position: relative;
         }
+
         .sus-option:last-child {
             border-right: none;
         }
+
         .sus-option input[type="radio"] {
             opacity: 0;
             position: absolute;
@@ -89,20 +103,25 @@
             cursor: pointer;
             margin: 0;
         }
+
         .sus-option:hover {
             background-color: #e5e7eb;
         }
-        .sus-option input[type="radio"]:checked + span {
-             color: white;
+
+        .sus-option input[type="radio"]:checked+span {
+            color: white;
         }
+
         .sus-option-checked {
             background-color: #3b82f6 !important;
         }
+
         .navigation-buttons {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
         }
+
         .btn {
             border: none;
             padding: 15px 30px;
@@ -113,89 +132,106 @@
             text-align: center;
             transition: background-color 0.3s;
         }
+
         .btn-primary {
             background-color: #007bff;
             color: white;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
         .btn-secondary {
             background-color: #6c757d;
             color: white;
         }
+
         .btn-secondary:hover {
             background-color: #5a6268;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
 
     <div class="sus-container bg-white shadow-lg rounded-lg p-8">
-        <h1 class="sus-header">Post-Condition User Experience Questionnaire<br>for {{ condition.split('for ')[1] if 'for ' in condition else condition }}</h1>
-        <p class="text-center text-gray-600 mb-8">Please rate your experience with the guidance system for the condition you just completed. For each statement, select the number that best reflects your view (1 = Strongly Disagree, 5 = Strongly Agree). Base your answers on this condition only. There are no right or wrong answers. You will complete this questionnaire after each condition (three in total).</p>
+        <div class="text-right text-gray-500 text-sm mb-4">
+            Participant ID: <span class="font-bold">{{ participant_id }}</span>
+        </div>
+        <h1 class="sus-header">Post-Condition User Experience Questionnaire<br>for {{ condition.split('for ')[1] if 'for
+            ' in condition else condition }}</h1>
+        <p class="text-center text-gray-600 mb-8">Please rate your experience with the guidance system for the condition
+            you just completed. For each statement, select the number that best reflects your view (1 = Strongly
+            Disagree, 5 = Strongly Agree). Base your answers on this condition only. There are no right or wrong
+            answers. You will complete this questionnaire after each condition (three in total).</p>
 
         <form action="/questionnaire" method="post">
             <input type="hidden" name="questionnaire_type" value="pcueq">
             <input type="hidden" name="condition" value="{{ condition }}">
 
             {% set questions = {
-                "Usability & Helpfulness": [
-                    ("A1", "I found the guidance system was easy to use.", false),
-                    ("A2", "The information provided by the guidance system was easy to understand.", false),
-                    ("A3", "I felt confident in completing the tasks using this system's guidance.", false),
-                    ("A4", "I think I would need a lot of practice to become skillful with this system.", true),
-                    ("A5", "I felt the guidance was helpful for performing the tasks accurately.", false)
-                ],
-                "Visual Quality & Perception": [
-                    ("B1", "The virtual guides (e.g., paths, outlines) appeared clear and sharp.", false),
-                    ("B2", "I was able to comfortably focus on both the virtual guides and the physical task objects at the same time.", false),
-                    ("B3", "I perceived the virtual guides as stable and correctly positioned over the physical world.", false),
-                    ("B4", "The virtual guides made it easy to judge the depth and position of targets.", false),
-                    ("B5", "The virtual content occluding my view of the tool/hand did not significantly disrupt my performance.", false),
-                    ("B6", "The overall visual display (brightness, resolution, field of view) was satisfactory for performing the tasks.", false)
-                ],
-                "Physical & Visual Comfort": [
-                    ("C1", "Using this system for the duration of the tasks caused significant eye strain or fatigue.", true),
-                    ("C2", "I experienced feelings of dizziness, headache, or nausea while using this system.", true),
-                    ("C3", "I did not perceive any distracting blur or double vision.", false),
-                    ("C4", "The headset was physically comfortable to wear during the tasks.", false)
-                ],
-                "Overall Experience & Affect": [
-                    ("D1", "I felt frustrated or annoyed while performing the tasks with this system.", true),
-                    ("D2", "Overall, I was satisfied with this guidance system.", false)
-                ]
+            "Usability & Helpfulness": [
+            ("A1", "I found the guidance system was easy to use.", false),
+            ("A2", "The information provided by the guidance system was easy to understand.", false),
+            ("A3", "I felt confident in completing the tasks using this system's guidance.", false),
+            ("A4", "I think I would need a lot of practice to become skillful with this system.", true),
+            ("A5", "I felt the guidance was helpful for performing the tasks accurately.", false)
+            ],
+            "Visual Quality & Perception": [
+            ("B1", "The virtual guides (e.g., paths, outlines) appeared clear and sharp.", false),
+            ("B2", "I was able to comfortably focus on both the virtual guides and the physical task objects at the same
+            time.", false),
+            ("B3", "I perceived the virtual guides as stable and correctly positioned over the physical world.", false),
+            ("B4", "The virtual guides made it easy to judge the depth and position of targets.", false),
+            ("B5", "The virtual content occluding my view of the tool/hand did not significantly disrupt my
+            performance.", false),
+            ("B6", "The overall visual display (brightness, resolution, field of view) was satisfactory for performing
+            the tasks.", false)
+            ],
+            "Physical & Visual Comfort": [
+            ("C1", "Using this system for the duration of the tasks caused significant eye strain or fatigue.", true),
+            ("C2", "I experienced feelings of dizziness, headache, or nausea while using this system.", true),
+            ("C3", "I did not perceive any distracting blur or double vision.", false),
+            ("C4", "The headset was physically comfortable to wear during the tasks.", false)
+            ],
+            "Overall Experience & Affect": [
+            ("D1", "I felt frustrated or annoyed while performing the tasks with this system.", true),
+            ("D2", "Overall, I was satisfied with this guidance system.", false)
+            ]
             } %}
 
             {% for category, cat_questions in questions.items() %}
-                <div class="category-section">
-                    <h2 class="text-2xl font-bold mb-4">{{ category }}</h2>
-                    {% for id, text, reverse_scored in cat_questions %}
-                    <div class="sus-question">
-                        <div class="sus-question-text">
-                            <p>{{ text }}</p>
+            <div class="category-section">
+                <h2 class="text-2xl font-bold mb-4">{{ category }}</h2>
+                {% for id, text, reverse_scored in cat_questions %}
+                <div class="sus-question">
+                    <div class="sus-question-text">
+                        <p>{{ text }}</p>
+                    </div>
+                    <div class="sus-scale-container">
+                        {% if loop.first %}
+                        <div class="sus-scale-labels-container">
+                            <div class="sus-scale-labels">
+                                <span>Strongly Disagree</span>
+                                <span>Strongly Agree</span>
+                            </div>
                         </div>
-                        <div class="sus-scale-container">
-                            {% if loop.first %}
-                            <div class="sus-scale-labels-container">
-                                <div class="sus-scale-labels">
-                                    <span>Strongly Disagree</span>
-                                    <span>Strongly Agree</span>
-                                </div>
-                            </div>
-                            {% endif %}
-                            <div class="sus-scale" id="scale-{{ id }}">
-                                {% for i in range(1, 6) %}
-                                <label class="sus-option">
-                                    <input type="radio" name="{{ id }}" value="{{ i }}" required>
-                                    <span>{{ i }}</span>
-                                </label>
-                                {% endfor %}
-                            </div>
+                        {% endif %}
+                        <div class="sus-scale" id="scale-{{ id }}">
+                            {% set selected_val = existing_responses.get(id) %}
+                            {% for i in range(1, 6) %}
+                            <label class="sus-option {{ 'sus-option-checked' if selected_val == i|string else '' }}">
+                                <input type="radio" name="{{ id }}" value="{{ i }}" required {{ 'checked' if
+                                    selected_val==i|string else '' }}>
+                                <span>{{ i }}</span>
+                            </label>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
+            </div>
             {% endfor %}
 
             <div class="navigation-buttons">
@@ -221,4 +257,5 @@
     </script>
 
 </body>
+
 </html>

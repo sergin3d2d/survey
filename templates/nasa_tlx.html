@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>NASA-TLX</title>
     <style>
@@ -13,45 +14,53 @@
             min-height: 100vh;
             margin: 0;
         }
+
         .container {
             background: #fff;
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 800px;
         }
+
         h1 {
             text-align: center;
             color: #444;
             margin-bottom: 30px;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
         .question {
             margin-bottom: 25px;
             border-top: 1px solid #eee;
             padding-top: 25px;
         }
+
         .scale {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: 10px;
         }
+
         .scale span {
             flex: 0 0 60px;
             text-align: center;
             font-size: 0.9em;
             color: #555;
         }
+
         .slider-container {
             position: relative;
             flex-grow: 1;
             margin: 0 15px;
         }
+
         .slider-container output {
             position: absolute;
             bottom: -20px;
@@ -60,10 +69,12 @@
             font-size: 0.9em;
             color: #555;
         }
+
         input[type="range"] {
             width: 100%;
             cursor: pointer;
         }
+
         button {
             background-color: #007bff;
             color: white;
@@ -75,66 +86,81 @@
             margin-top: 20px;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <div style="text-align: right; color: #666; font-size: 0.9em; margin-bottom: 10px;">
+            Participant ID: <strong>{{ participant_id }}</strong>
+        </div>
         <h1>NASA-TLX: {{ condition }}</h1>
-        <p>Please rate your experience for the condition you just completed. Move each slider to the point that best reflects your experience. There are no right or wrong answers. You will complete these ratings for each condition (three in total).</p>
+        <p>Please rate your experience for the condition you just completed. Move each slider to the point that best
+            reflects your experience. There are no right or wrong answers. You will complete these ratings for each
+            condition (three in total).</p>
         <form action="/questionnaire" method="post">
             <input type="hidden" name="questionnaire_type" value="nasa_tlx">
             {% for i in range(texts|length) %}
+            {% set val = existing_responses.get('q' ~ i, '50') %}
             <div class="question">
                 <label>{{ texts[i] }}</label>
                 <div class="scale">
                     <span>{{ left_labels[i] }}</span>
                     <div class="slider-container">
-                        <input type="range" name="q{{ i }}" min="0" max="100" value="50" step="1" oninput="this.nextElementSibling.value = this.value + ' out of 100'">
-                        <output>50 out of 100</output>
+                        <input type="range" name="q{{ i }}" min="0" max="100" value="{{ val }}" step="1"
+                            oninput="this.nextElementSibling.value = this.value + ' out of 100'">
+                        <output>{{ val }} out of 100</output>
                     </div>
                     <span>{{ right_labels[i] }}</span>
                 </div>
             </div>
             {% endfor %}
             <div class="navigation-buttons">
-            <a href="/back" class="btn btn-secondary">Back</a>
-            <button type="submit" class="btn btn-primary">Next</button>
-        </div>
-    </form>
-</div>
-<style>
-    .navigation-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 30px;
-    }
-    .btn {
-        border: none;
-        padding: 15px 30px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1.1em;
-        text-decoration: none;
-        text-align: center;
-        transition: background-color 0.3s;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        color: white;
-    }
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-    .btn-secondary {
-        background-color: #6c757d;
-        color: white;
-    }
-    .btn-secondary:hover {
-        background-color: #5a6268;
-    }
-</style>
+                <a href="/back" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+        </form>
+    </div>
+    <style>
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </body>
+
 </html>
