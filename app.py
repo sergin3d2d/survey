@@ -139,6 +139,11 @@ def questionnaire():
         responses = request.form.to_dict()
         questionnaire_type = responses.pop('questionnaire_type', 'unknown')
         
+        # Convert 'none' to None for skipped questions
+        for k, v in responses.items():
+            if v == 'none':
+                responses[k] = None
+        
         if 'responses' not in session:
             session['responses'] = {}
         session['responses'][current_task] = responses

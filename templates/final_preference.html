@@ -108,19 +108,70 @@
         <h1>Final Preference</h1>
         <form action="/questionnaire" method="post">
             <input type="hidden" name="questionnaire_type" value="final_preference">
-            <p>Please indicate your final preference.</p>
+            <p>Please rank your preferences for the conditions you experienced (1st choice is your most preferred).</p>
+
+            {% set pref = existing_responses.get('preference', '') %}
+            {% set pref2 = existing_responses.get('preference_2nd', '') %}
+            {% set pref3 = existing_responses.get('preference_3rd', '') %}
+
+            {% set options = ['On-Screen', 'AR-OST', 'AR-VST'] %}
+
             <div class="form-group">
-                <label for="preference">Which condition did you prefer?</label>
-                <select id="preference" name="preference">
-                    {% set pref = existing_responses.get('preference') %}
-                    <option {{ 'selected' if pref=='On-Screen' else '' }}>On-Screen</option>
-                    <option {{ 'selected' if pref=='AR-OST' else '' }}>AR-OST</option>
-                    <option {{ 'selected' if pref=='AR-VST' else '' }}>AR-VST</option>
+                <label for="preference">1st Choice (Most Preferred):</label>
+                <select id="preference" name="preference" required onchange="updateOptions()">
+                    <option value="" disabled {{ 'selected' if not pref else '' }}>Select condition...</option>
+                    {% for opt in options %}
+                    <option value="{{ opt }}" {{ 'selected' if pref==opt else '' }}>{{ opt }}</option>
+                    {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <div class="form-group">
+                <label for="preference_2nd">2nd Choice:</label>
+                <select id="preference_2nd" name="preference_2nd" required onchange="updateOptions()">
+                    <option value="" disabled {{ 'selected' if not pref2 else '' }}>Select condition...</option>
+                    {% for opt in options %}
+                    <option value="{{ opt }}" {{ 'selected' if pref2==opt else '' }}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="preference_3rd">3rd Choice (Least Preferred):</label>
+                <select id="preference_3rd" name="preference_3rd" required onchange="updateOptions()">
+                    <option value="" disabled {{ 'selected' if not pref3 else '' }}>Select condition...</option>
+                    {% for opt in options %}
+                    <option value="{{ opt }}" {{ 'selected' if pref3==opt else '' }}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Ranking</button>
         </form>
     </div>
+
+    <script>
+        function updateOptions() {
+            const selects = ['preference', 'preference_2nd', 'preference_3rd'];
+            const values = selects.map(id => document.getElementById(id).value);
+
+            selects.forEach((id, index) => {
+                const select = document.getElementById(id);
+                const options = select.querySelectorAll('option');
+
+                options.forEach(option => {
+                    if (option.value === "") return;
+
+                    // Disable option if it's selected in another dropdown
+                    const isSelectedElsewhere = values.some((val, i) => i !== index && val === option.value);
+                    option.disabled = isSelectedElsewhere;
+                });
+            });
+        }
+
+        // Initial call to set state if values exist
+        window.onload = updateOptions;
+    </script>
 </body>
 
 </html>
