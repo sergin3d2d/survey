@@ -5,8 +5,8 @@
     ],
     "main_conditions": [
         "On-Screen",
-        "AR-OST",
-        "AR-VST"
+        "AR-OST (Hololens)",
+        "AR-VST (Quest 3)"
     ],
     "end_conditions": [
         "Final Preference"

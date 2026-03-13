@@ -20,7 +20,7 @@ def load_config():
         with open(CONFIG_FILE, 'r') as f:
             return json.load(f)
     return {
-        'main_conditions': ['On-Screen', 'AR-OST', 'AR-VST'],
+        'main_conditions': ['On-Screen', 'AR-OST (Hololens)', 'AR-VST (Quest 3)'],
         'weighted': True
     }
 
