@@ -76,6 +76,7 @@ The survey application uses `config.json` for settings layout trackers.
         "AR-VST (Quest 3)"
     ],
     "weighted": false,
+    "order_mode": "latin_square",
     "question_font_size": 1.6,
     "description_font_size": 1.4,
     "global_font_size": 1.5
@@ -84,7 +85,12 @@ The survey application uses `config.json` for settings layout trackers.
 
 ### Active Fields
 *   **`main_conditions`** (List of Strings)
-    *   Defines experimental condition systems participants will cycle through. Shuffled randomly on start.
+    *   Defines the experimental conditions participants cycle through. Their presentation order is set by `order_mode`.
+*   **`order_mode`** (String: `latin_square` | `random` | `manual`)
+    *   `latin_square` (default): counterbalanced order from a balanced Latin square (Williams design), keyed to the Participant ID. Participant *n* receives row `(n - 1) mod k`, so the same ID always reproduces the same order. For an odd number of conditions the reversed rows are appended, giving `k = 2n` sequences (6 sequences for 3 conditions); for an even number, `k = n`.
+    *   `random`: independent shuffle per participant — not counterbalanced.
+    *   `manual`: the Latin square order is pre-filled on the summary screen and the experimenter can reorder it with the ↑/↓ arrows.
+    *   The legacy boolean `manual_selection` is still honoured for old config files (`true` → `manual`).
 *   **`weighted`** (Boolean)
     *   `false`: Standard unweighted NASA-TLX score average averages.
     *   `true`: Appends a 15 pairwise questions cycle multiplier calculator endpoint.
@@ -117,7 +123,7 @@ graph TD
 ```
 
 ### Route Nodes Overview
--   **`/`**: Initial demographics form conditions collection.
+-   **`/`**: Initial demographics form (Participant ID, gender, vision correction, uncorrected/corrected vision test scores, IPD, dominant hand, previous AR experience).
 -   **`/questionnaire`**: Sequential cycles pulling workflows elements condition headers looping.
 -   **`/review`**: Read grouped participants row tables back assessing quality checks.
 
@@ -133,6 +139,21 @@ Saves immediate responses natively inside standard `results.csv`.
 | **`user_id`** | Unique session trigger key track. | `user_20260324120000` |
 | **`questionnaire`** | Typename identification source string. | `nasa_tlx`, `pcueq` |
 | **`key`** / **`value`** | Direct dictionary fields elements response. | `q0` (Mental) / `45` |
+
+### Pre-Experiment Keys
+The `pre_experiment` block records the demographics plus the counterbalancing assignment, so the condition order is recoverable directly from the CSV rather than inferred from timestamps:
+
+| Key | Description |
+| :--- | :--- |
+| `participant_id` | Experimenter-entered ID; drives the Latin square row. |
+| `gender` | `female` / `male` / `non_binary` / `prefer_not_to_say`. |
+| `vision_correction` | `none` / `glasses` / `contact_lenses`. |
+| `vision_correction_worn` | Whether correction was worn during the experiment (`yes` / `no`). Not asked when `vision_correction` is `none`; recorded as `not_applicable`. |
+| `vision_test_score_uncorrected` | Vision test score **without** glasses or contact lenses (always required). |
+| `vision_test_score_corrected` | Vision test score **with** correction. Only asked when correction is used, blank otherwise. |
+| `order_mode` | Which assignment scheme produced the order. |
+| `latin_square_sequence` | 1-based Latin square row used (blank in `random` mode). |
+| `condition_order` | The order actually run, e.g. `AR-OST (Hololens) > AR-VST (Quest 3) > On-Screen`. |
 
 ### Analysis Quick Start (Python/Pandas)
 Use flat string pivots sorting table matrices variables formulas:

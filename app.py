@@ -15,15 +15,75 @@ app.config['SESSION_COOKIE_SECURE'] = False  # Set to True only if using HTTPS
 CONFIG_FILE = 'config.json'
 RESULTS_FILE = 'results.csv'
 
+ORDER_MODES = ('latin_square', 'random', 'manual')
+
+
+def balanced_latin_square(n):
+    """Williams design for n conditions.
+
+    Every condition appears in every position equally often, and every ordered
+    pair of conditions occurs equally often. Odd n cannot balance immediate
+    sequence effects in n rows, so the reversed rows are appended, giving 2n
+    sequences (for n=3 that is all 6 permutations).
+    """
+    if n <= 0:
+        return []
+    if n == 1:
+        return [[0]]
+
+    first_row = []
+    for j in range(n):
+        if j % 2 == 0:
+            first_row.append(j // 2)
+        else:
+            first_row.append(n - 1 - (j - 1) // 2)
+
+    square = [[(value + i) % n for value in first_row] for i in range(n)]
+    if n % 2 == 1:
+        square += [list(reversed(row)) for row in square]
+    return square
+
+
+def assign_condition_order(participant_id, conditions):
+    """Map a participant ID onto one row of the balanced Latin square.
+
+    Returns (ordered_conditions, sequence_index, sequence_count). Participant 1
+    gets row 0, participant 2 row 1, and so on, wrapping around; a missing or
+    non-numeric ID falls back to a random row so the session still runs.
+    """
+    square = balanced_latin_square(len(conditions))
+    if not square:
+        return list(conditions), None, 0
+
+    try:
+        pid = int(str(participant_id).strip())
+    except (TypeError, ValueError, AttributeError):
+        pid = None
+
+    if pid is None:
+        sequence_index = random.randrange(len(square))
+    else:
+        sequence_index = (pid - 1) % len(square)
+
+    return [conditions[i] for i in square[sequence_index]], sequence_index, len(square)
+
+
 def load_config():
+    config = {}
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, 'r') as f:
-            return json.load(f)
-    return {
-        'main_conditions': ['On-Screen', 'AR-OST (Hololens)', 'AR-VST (Quest 3)'],
-        'weighted': True,
-        'manual_selection': False
-    }
+            config = json.load(f)
+
+    config.setdefault('main_conditions', ['On-Screen', 'AR-OST (Hololens)', 'AR-VST (Quest 3)'])
+    config.setdefault('weighted', True)
+
+    # Back-compat: the boolean 'manual_selection' predates the three-way 'order_mode'
+    if 'order_mode' not in config:
+        config['order_mode'] = 'manual' if config.get('manual_selection') else 'latin_square'
+    if config['order_mode'] not in ORDER_MODES:
+        config['order_mode'] = 'latin_square'
+
+    return config
 
 def save_config(config):
     with open(CONFIG_FILE, 'w') as f:
@@ -80,34 +140,58 @@ def initialize_experiment():
     # Save initial conditions to session
     session['participant_id'] = request.form.get('participant_id')
     session['user_id'] = f"user_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-    session['vision_test_score'] = request.form.get('vision_test_score')
     session['ipd'] = request.form.get('ipd')
     session['dominant_hand'] = request.form.get('dominant_hand')
     session['previous_ar_experience'] = request.form.get('previous_ar_experience')
-    
+
+    # The follow-up questions are only asked of participants who use correction;
+    # for everyone else the answer is implied rather than collected twice.
+    vision_correction = request.form.get('vision_correction')
+    if vision_correction == 'none':
+        vision_correction_worn = 'not_applicable'
+    else:
+        vision_correction_worn = request.form.get('vision_correction_worn')
+
     # Also, store them in a dictionary for easy saving later
     session['initial_conditions_responses'] = {
         'participant_id': request.form.get('participant_id'),
-        'vision_test_score': request.form.get('vision_test_score'),
+        'gender': request.form.get('gender'),
+        'vision_correction': vision_correction,
+        'vision_correction_worn': vision_correction_worn,
+        'vision_test_score_uncorrected': request.form.get('vision_test_score_uncorrected'),
+        'vision_test_score_corrected': request.form.get('vision_test_score_corrected'),
         'ipd': request.form.get('ipd'),
         'dominant_hand': request.form.get('dominant_hand'),
         'previous_ar_experience': request.form.get('previous_ar_experience')
     }
-    
+
     config = load_config()
-    main_conditions = config.get('main_conditions', [])
-    manual_selection = config.get('manual_selection', False)
-    
-    if not manual_selection:
+    order_mode = config.get('order_mode', 'latin_square')
+    main_conditions = list(config.get('main_conditions', []))
+
+    # The Latin square row is derived from the participant ID, so re-running a
+    # participant always reproduces the same order. Manual mode pre-fills with
+    # that same order and lets the experimenter override it.
+    ordered_conditions, sequence_index, sequence_count = assign_condition_order(
+        session['participant_id'], main_conditions)
+
+    if order_mode == 'random':
         random.shuffle(main_conditions)
-    
-    session['main_conditions_randomized'] = main_conditions
-    
-    return render_template('initialization_summary.html', 
-                           conditions=main_conditions, 
-                           ipd=session['ipd'], 
+        ordered_conditions, sequence_index = main_conditions, None
+
+    session['main_conditions_randomized'] = ordered_conditions
+    session['order_mode'] = order_mode
+    session['latin_square_sequence'] = sequence_index
+
+    return render_template('initialization_summary.html',
+                           conditions=ordered_conditions,
+                           ipd=session['ipd'],
                            dominant_hand=session['dominant_hand'],
-                           manual_selection=manual_selection)
+                           participant_id=session['participant_id'],
+                           order_mode=order_mode,
+                           manual_selection=(order_mode == 'manual'),
+                           sequence_index=sequence_index,
+                           sequence_count=sequence_count)
 
 
 @app.route('/start_experiment_proper', methods=['POST'])
@@ -115,16 +199,24 @@ def start_experiment_proper():
     config = load_config()
     
     # If in manual mode, the user might have provided a new order
-    if config.get('manual_selection', False):
+    if config.get('order_mode') == 'manual':
         new_order = request.form.getlist('condition_order')
         if new_order:
             session['main_conditions_randomized'] = new_order
 
-    # Write pre-experiment data
+    # Write pre-experiment data, including the condition order actually used
+    pre_experiment_responses = dict(session.get('initial_conditions_responses', {}))
+    sequence_index = session.get('latin_square_sequence')
+    pre_experiment_responses['order_mode'] = session.get('order_mode', 'latin_square')
+    pre_experiment_responses['latin_square_sequence'] = (
+        '' if sequence_index is None else sequence_index + 1)
+    pre_experiment_responses['condition_order'] = ' > '.join(
+        session.get('main_conditions_randomized', []))
+
     write_result({
         'questionnaire': 'pre_experiment',
         'condition': 'Pre-Experiment',
-        'responses': session.get('initial_conditions_responses', {})
+        'responses': pre_experiment_responses
     })
     session.pop('initial_conditions_responses', None) # Clear it after saving
 
@@ -247,7 +339,9 @@ def settings():
     if request.method == 'POST':
         config['main_conditions'] = [c.strip() for c in request.form['main_conditions'].split('\n') if c.strip()]
         config['weighted'] = 'weighted' in request.form
-        config['manual_selection'] = 'manual_selection' in request.form
+        order_mode = request.form.get('order_mode', 'latin_square')
+        config['order_mode'] = order_mode if order_mode in ORDER_MODES else 'latin_square'
+        config.pop('manual_selection', None)
         config['question_font_size'] = float(request.form.get('question_font_size', 1.6))
         config['description_font_size'] = float(request.form.get('description_font_size', 1.4))
         config['global_font_size'] = float(request.form.get('global_font_size', 1.0))
@@ -257,7 +351,7 @@ def settings():
     return render_template('settings.html', 
                             main_conditions=config.get('main_conditions', []),
                             weighted=config.get('weighted', True),
-                            manual_selection=config.get('manual_selection', False),
+                            order_mode=config.get('order_mode', 'latin_square'),
                             question_font_size=config.get('question_font_size', 1.6),
                             description_font_size=config.get('description_font_size', 1.4),
                             global_font_size=config.get('global_font_size', 1.0))
@@ -283,6 +377,8 @@ def review():
                 
                 if q_type == 'pre_experiment' and row['key'] == 'participant_id':
                     grouped_results[uid]['participant_id'] = row['value']
+                if q_type == 'pre_experiment' and row['key'] == 'condition_order':
+                    grouped_results[uid]['condition_order'] = row['value']
 
                 section_key = f"{q_type} | {cond}"
                 if section_key not in grouped_results[uid]['sections']:

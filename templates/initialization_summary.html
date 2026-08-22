@@ -77,14 +77,22 @@
     <div class="container">
         <h1>Experiment Initialized</h1>
         <div class="summary-details">
+            <p><strong>Participant ID:</strong> {{ participant_id }}</p>
             <p><strong>IPD:</strong> {{ ipd }} mm</p>
             <p><strong>Dominant Hand:</strong> {{ dominant_hand.capitalize() }}</p>
         </div>
-        
-        {% if manual_selection %}
-            <p>Manual Mode: Use the arrows to set the order of conditions.</p>
+
+        {% if order_mode == 'manual' %}
+            <p>Manual Mode: use the arrows to set the order of conditions.
+            {%- if sequence_index is not none %}
+                The balanced Latin square order for participant {{ participant_id }}
+                (sequence {{ sequence_index + 1 }} of {{ sequence_count }}) is pre-filled below.
+            {%- endif %}</p>
+        {% elif order_mode == 'random' %}
+            <p>Random Mode: the shuffled order of conditions is as follows:</p>
         {% else %}
-            <p>The randomized order of conditions is as follows:</p>
+            <p>Balanced Latin square (Williams design): participant {{ participant_id }} is assigned
+                sequence {{ sequence_index + 1 }} of {{ sequence_count }}.</p>
         {% endif %}
 
         <form action="/start_experiment_proper" method="post">

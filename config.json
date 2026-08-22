@@ -1,7 +1,13 @@
 {
     "pre_experiment_questions": [
-        "Age",
-        "Gender"
+        "Participant ID",
+        "Gender",
+        "Vision correction",
+        "Vision test score (uncorrected)",
+        "Vision test score (corrected)",
+        "IPD",
+        "Dominant hand",
+        "Previous AR experience"
     ],
     "main_conditions": [
         "On-Screen",
@@ -15,5 +21,5 @@
     "question_font_size": 1.6,
     "description_font_size": 1.4,
     "global_font_size": 1.5,
-    "manual_selection": true
+    "order_mode": "latin_square"
 }
