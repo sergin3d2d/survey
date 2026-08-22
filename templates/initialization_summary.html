@@ -80,17 +80,83 @@
             <p><strong>IPD:</strong> {{ ipd }} mm</p>
             <p><strong>Dominant Hand:</strong> {{ dominant_hand.capitalize() }}</p>
         </div>
-        <p>The randomized order of conditions is as follows:</p>
-        <ul class="condition-list">
-            {% for condition in conditions %}
-                <li>{{ loop.index }}. {{ condition }}</li>
-            {% endfor %}
-        </ul>
+        
+        {% if manual_selection %}
+            <p>Manual Mode: Use the arrows to set the order of conditions.</p>
+        {% else %}
+            <p>The randomized order of conditions is as follows:</p>
+        {% endif %}
+
         <form action="/start_experiment_proper" method="post">
+            <ul id="condition-list" class="condition-list">
+                {% for condition in conditions %}
+                    <li class="condition-item">
+                        <span class="condition-name">{{ condition }}</span>
+                        {% if manual_selection %}
+                        <div class="controls">
+                            <button type="button" class="ctrl-btn" onclick="moveUp(this)">↑</button>
+                            <button type="button" class="ctrl-btn" onclick="moveDown(this)">↓</button>
+                        </div>
+                        {% endif %}
+                        <!-- Hidden input to maintain order for form submission -->
+                        <input type="hidden" name="condition_order" value="{{ condition }}">
+                    </li>
+                {% endfor %}
+            </ul>
+
             <div class="navigation-buttons">
                 <button type="submit" class="btn btn-primary">Continue Experiment</button>
             </div>
         </form>
+    </div>
+
+    {% if manual_selection %}
+    <style>
+        .condition-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        .ctrl-btn {
+            padding: 5px 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .ctrl-btn:hover {
+            background: #f0f0f0;
+        }
+    </style>
+    <script>
+        function moveUp(btn) {
+            const li = btn.closest('.condition-item');
+            const prev = li.previousElementSibling;
+            if (prev) {
+                li.parentNode.insertBefore(li, prev);
+            }
+        }
+        function moveDown(btn) {
+            const li = btn.closest('.condition-item');
+            const next = li.nextElementSibling;
+            if (next) {
+                li.parentNode.insertBefore(next, li);
+            }
+        }
+    </script>
+    {% endif %}
     </div>
 </body>
 </html>

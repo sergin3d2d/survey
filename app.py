@@ -21,7 +21,8 @@ def load_config():
             return json.load(f)
     return {
         'main_conditions': ['On-Screen', 'AR-OST (Hololens)', 'AR-VST (Quest 3)'],
-        'weighted': True
+        'weighted': True,
+        'manual_selection': False
     }
 
 def save_config(config):
@@ -94,20 +95,31 @@ def initialize_experiment():
     }
     
     config = load_config()
-    main_conditions = config['main_conditions']
-    random.shuffle(main_conditions)
+    main_conditions = config.get('main_conditions', [])
+    manual_selection = config.get('manual_selection', False)
+    
+    if not manual_selection:
+        random.shuffle(main_conditions)
+    
     session['main_conditions_randomized'] = main_conditions
     
     return render_template('initialization_summary.html', 
                            conditions=main_conditions, 
                            ipd=session['ipd'], 
-                           dominant_hand=session['dominant_hand'])
+                           dominant_hand=session['dominant_hand'],
+                           manual_selection=manual_selection)
 
 
 @app.route('/start_experiment_proper', methods=['POST'])
 def start_experiment_proper():
     config = load_config()
     
+    # If in manual mode, the user might have provided a new order
+    if config.get('manual_selection', False):
+        new_order = request.form.getlist('condition_order')
+        if new_order:
+            session['main_conditions_randomized'] = new_order
+
     # Write pre-experiment data
     write_result({
         'questionnaire': 'pre_experiment',
@@ -235,6 +247,7 @@ def settings():
     if request.method == 'POST':
         config['main_conditions'] = [c.strip() for c in request.form['main_conditions'].split('\n') if c.strip()]
         config['weighted'] = 'weighted' in request.form
+        config['manual_selection'] = 'manual_selection' in request.form
         config['question_font_size'] = float(request.form.get('question_font_size', 1.6))
         config['description_font_size'] = float(request.form.get('description_font_size', 1.4))
         config['global_font_size'] = float(request.form.get('global_font_size', 1.0))
@@ -244,6 +257,7 @@ def settings():
     return render_template('settings.html', 
                             main_conditions=config.get('main_conditions', []),
                             weighted=config.get('weighted', True),
+                            manual_selection=config.get('manual_selection', False),
                             question_font_size=config.get('question_font_size', 1.6),
                             description_font_size=config.get('description_font_size', 1.4),
                             global_font_size=config.get('global_font_size', 1.0))
@@ -260,6 +274,7 @@ def review():
                     grouped_results[uid] = {
                         'participant_id': 'N/A',
                         'timestamp': row['timestamp'],
+                        'condition_order': 'N/A',
                         'sections': {}
                     }
                 
